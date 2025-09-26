@@ -18,3 +18,7 @@ class B{
 // 1 4 2 3 - primero las de clase, luego las de instancia, luego el método
 // 2 1 4 3 
 // 2 3 1 4
+/*
+- Los campos y los bloques inicializadores de instancias se ejecutan en el orden en que aparecen en el archivo.
+- El constructor se ejecuta después de que se hayan ejecutado todos los campos y bloques inicializadores de instancia.
+*/
