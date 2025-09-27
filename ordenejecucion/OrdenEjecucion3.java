@@ -1,6 +1,6 @@
 public class OrdenEjecucion3 {
 
-    static String s1 = metodo("X");
+    static String s1 = metodo("X");               
 
     String s2 = metodo("Y");
 
