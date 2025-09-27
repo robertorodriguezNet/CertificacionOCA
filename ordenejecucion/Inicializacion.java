@@ -4,7 +4,7 @@ public class Inicializacion{
 		number = 5;       // 3
 	}
 
-	public static void main(){String[] args){
+	public static void main(String[] args){
 		Inicializacion ini = new Inicializacion();
 		System.out.println(ini.number);
 	}
@@ -17,3 +17,37 @@ public class Inicializacion{
 
 }
 
+/*
+* ¿Qué se debe imprimir
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+* Se imprime 5
+*
+*
+* Primero se ejecutan las propiedades:
+*  1 Las de clase
+*  2 Las de instancia 
+*
+*
+*
+*
+*/
