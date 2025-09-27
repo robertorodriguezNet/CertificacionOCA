@@ -1,32 +1,32 @@
 class Padre {
     static {
-        System.out.println("Padre static");
+        System.out.println("Padre static");   	
     }
 
     {
-        System.out.println("Padre instancia");
+        System.out.println("Padre instancia"); 
     }
 
     public Padre() {
-        System.out.println("Constructor Padre");
+        System.out.println("Constructor Padre"); 
     }
 }
 
 class Hijo extends Padre {
     static {
-        System.out.println("Hijo static");
+        System.out.println("Hijo static");    
     }
 
     {
-        System.out.println("Hijo instancia");
+        System.out.println("Hijo instancia"); 
     }
 
     public Hijo() {
-        System.out.println("Constructor Hijo");
+        System.out.println("Constructor Hijo");  
     }
 
     public static void main(String[] args) {
-        new Hijo();
+        new Hijo();                            
     }
 }
 
