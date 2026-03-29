@@ -1,0 +1,1153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" lang="en" xml:lang="en">
+<head>
+<title>OCA Java® SE 8 Programmer I Exam Guide (Exam 1Z0-808)</title>
+<link href="1260011380.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:4adb942e-48ce-4982-bcc1-1a56f022bd8f" name="Adept.expected.resource"/>
+</head>
+<body>
+<section epub:type="chapter">
+<p class="imagea"><img alt="Images" class="inline" src="common.jpg"/></p>
+<h2 class="h2" id="ch2"><span epub:type="pagebreak" id="page_85"></span>2</h2>
+<h2 class="h2a">Object Orientation</h2>
+<p class="noindentd">CERTIFICATION OBJECTIVES</p>
+<p class="bull">•&#160;&#160;&#160;&#160;&#160;Describir Encapsulation</p>
+<p class="bull">•&#160;&#160;&#160;&#160;&#160;Implementar Inheritance</p>
+<p class="bull">•&#160;&#160;&#160;&#160;&#160;Usar relaciones IS-A y HAS-A (OCP)</p>
+<p class="bull">•&#160;&#160;&#160;&#160;&#160;Usar Polymorphism</p>
+<p class="bull">•&#160;&#160;&#160;&#160;&#160;Usar Overriding y Overloading</p>
+<p class="bull">•&#160;&#160;&#160;&#160;&#160;Comprender Casting</p>
+<p class="bull">•&#160;&#160;&#160;&#160;&#160;Usar Interfaces</p>
+<p class="bull">•&#160;&#160;&#160;&#160;&#160;Comprender y usar Return Types</p>
+<p class="bull">•&#160;&#160;&#160;&#160;&#160;Desarrollar Constructors</p>
+<p class="bull">•&#160;&#160;&#160;&#160;&#160;Usar miembros static</p>
+<p class="tick"><img alt="Images" class="inline" src="tic.jpg"/>&#160;&#160;&#160;Two-Minute Drill</p>
+<p class="tick1"><strong>Q&amp;A</strong>&#160;Autoevaluación</p>
+<p class="noindenttop"><span epub:type="pagebreak" id="page_86"></span><span class="drop">S</span>er un Oracle Certified Associate (OCA) 8 significa que debes estar en plena sintonía con los aspectos orientados a objetos de Java. Debes soñar con jerarquías de herencia; el poder del polimorfismo debe fluir a través de ti; y la encapsulación debe convertirse en algo natural para ti. (El acoplamiento, la cohesión, la composición y los patrones de diseño se convertirán en tu pan de cada día cuando seas un Oracle Certified Professional [OCP] 8). Este capítulo te preparará para todos los objetivos y preguntas orientadas a objetos que encontrarás en el examen. Hemos conocido a muchos programadores Java experimentados que realmente no han llegado a dominar las herramientas orientadas a objetos que Java proporciona, así que empezaremos desde el principio.</p>
+<h3 class="h3a">CERTIFICATION OBJECTIVE</h3>
+<h3 class="h3n"><a id="ch02lev1sec1"></a>Encapsulation (OCA Objectives 6.1 and 6.5)</h3>
+<p class="noindent"><em>6.1 Create methods with arguments and return values; including overloaded methods.</em></p>
+<p class="noindent"><em>6.5 Apply encapsulation principles to a class.</em></p>
+<p class="indentt">Imagina que escribiste el código de una clase y otra docena de programadores de tu empresa escribieron programas que usaban tu clase. Ahora imagina que, más adelante, no te gustó cómo se comportaba la clase, porque algunas de sus variables de instancia estaban siendo establecidas (por los otros programadores desde su propio código) con valores que no habías previsto. El código de <em>ellos</em> sacó a la luz errores en <em>tu</em> código. (Tranquilo, esto es solo hipotético). Bueno, es un programa Java, así que deberías poder distribuir una versión más reciente de la clase, que ellos podrían reemplazar en sus programas sin cambiar nada de su propio código.</p>
+
+<p class="indent">Este escenario destaca dos de las promesas/beneficios de un lenguaje orientado a objetos (OO): flexibilidad y mantenibilidad. Pero esos beneficios no vienen automáticamente. Tienes que hacer algo. Tienes que escribir tus clases y tu código de una manera que apoye la flexibilidad y la mantenibilidad. ¿Y qué si Java soporta OO? No puede diseñar tu código por ti. Por ejemplo, imagina que creaste tu clase con variables de instancia <code>public</code>, y que esos otros programadores estaban estableciendo las variables de instancia directamente, como demuestra el siguiente código:</p>
+
+<p class="code1"><img alt="images" src="p0088-01.jpg"/></p>
+<p class="code1"><img alt="images" src="p0089-01.jpg"/></p>
+
+<p class="indent"><span epub:type="pagebreak" id="page_87"></span>Y ahora estás en problemas. ¿Cómo vas a cambiar la clase de una manera que te permita manejar los problemas que surgen cuando alguien cambia la variable <code>size</code> a un valor que causa inconvenientes? Tu única opción es volver y escribir código de método para ajustar <code>size</code> (por ejemplo, un método <code>setSize(int a)</code>) y luego aislar la variable <code>size</code> con, digamos, un modificador de acceso private. Pero en cuanto haces ese cambio en tu código, ¡rompes el código de todos los demás!</p>
+
+<p class="indent">La capacidad de realizar cambios en tu código de implementación sin romper el código de otros que usan tu código es un beneficio clave de la encapsulación. Quieres ocultar los detalles de implementación detrás de una interfaz de programación pública. Por <em>interfaz</em>, nos referimos al conjunto de métodos accesibles que tu código pone a disposición para que otro código los invoque; en otras palabras, la API de tu código. Al ocultar los detalles de implementación, puedes rehacer el código de tus métodos (quizá también alterando la forma en que tu clase usa las variables) sin obligar a cambiar el código que llama a tu método modificado.</p>
+
+<p class="indent">Si quieres mantenibilidad, flexibilidad y extensibilidad (y, por supuesto, las quieres), tu diseño debe incluir encapsulación. ¿Cómo haces eso?</p>
+
+<p class="bulletxt"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Mantén ocultas las variables de instancia (con un modificador de acceso, a menudo <code>private</code>).</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Crea métodos de acceso <code>public</code> y obliga al código que llama a usar esos métodos en lugar de acceder directamente a la variable de instancia. Estos llamados métodos de acceso permiten a los usuarios de tu clase <strong>establecer</strong> el valor de una variable o <strong>obtener</strong> el valor de una variable.</p>
+<p class="bulletxb"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Para estos métodos de acceso, usa la convención de nombres más común: <code>set&lt;SomeProperty&gt;</code> y <code>get&lt;SomeProperty&gt;</code>.</p>
+
+<p class="indent"><a href="#ch2fig1">Figure 2-1</a> ilustra la idea de que la encapsulación obliga a los llamadores de nuestro código a pasar por métodos en lugar de acceder directamente a las variables.</p>
+
+<p class="images"><a id="ch2fig1"></a><img alt="images" src="f0090-01.jpg"/></p>
+
+<p class="figcap"><span epub:type="pagebreak" id="page_88"></span><span class="figs"><strong>FIGURE 2-1</strong></span>&#160;&#160;&#160;La naturaleza de la encapsulación</p>
+
+<p class="indent">Llamamos a los métodos de acceso <em>getters</em> y <em>setters</em>, aunque algunos prefieren los términos más elegantes <em>accessors</em> y <em>mutators</em>. (Personalmente, no nos gusta la palabra “mutate”). Independientemente de cómo los llames, son métodos por los que otros programadores deben pasar para acceder a tus variables de instancia. Parecen simples, y probablemente los has estado usando desde siempre:</p>
+
+<p class="code1"><img alt="images" src="p0090-01.jpg"/></p>
+<p class="code1"><img alt="images" src="p0091-01.jpg"/></p>
+
+<p class="indent"><span epub:type="pagebreak" id="page_89"></span>Un momento. ¿Qué tan útil es el código anterior? Ni siquiera hace validación o procesamiento. ¿Qué beneficio puede haber en tener getters y setters que no añaden funcionalidad? El punto es que puedes cambiar de opinión más adelante y añadir más código a tus métodos sin romper tu API. Incluso si hoy no crees que realmente necesites validación o procesamiento de los datos, un buen diseño OO dicta que planifiques para el futuro. Para estar seguro, obliga al código que llama a pasar por tus métodos en lugar de ir directamente a las variables de instancia. <em>Siempre</em>. Así eres libre de rehacer las implementaciones de tus métodos más adelante, sin arriesgarte a la ira de esa docena de programadores que saben dónde vives.</p>
+
+<p class="indent">Nota: En <a href="ch06.xhtml">Chapter 6</a> volveremos al tema de la encapsulación tal como se aplica a variables de instancia que también son variables de referencia. Es más complicado de lo que podrías pensar, así que mantente atento. (Además, esperaremos hasta <a href="ch06.xhtml">Chapter 6</a> para desafiarte con preguntas de práctica sobre encapsulación).</p>
+
+<div class="side-exam">
+<p class="imaget"><img alt="Images" src="examwatch.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>Presta atención al código que parece estar preguntando por el comportamiento de un método, cuando el problema en realidad es una falta de encapsulación. Observa el siguiente ejemplo y mira si puedes averiguar qué está pasando:</em></strong></p>
+<p class="imagel"><img alt="images" src="f0091-01.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>Ahora considera esta pregunta: ¿El valor de right va a ser siempre un tercio del valor de left? Parece que sí, hasta que te das cuenta de que los usuarios de la clase <code>Foo</code> no necesitan usar el método <code>setLeft()</code>. Pueden simplemente ir directamente a las variables de instancia y cambiarlas a cualquier valor int arbitrario.</em></strong></p>
+</div>
+<h3 class="h3a"><span epub:type="pagebreak" id="page_90"></span>CERTIFICATION OBJECTIVE</h3>
+<h3 class="h3n"><a id="ch02lev1sec2"></a>Inheritance and Polymorphism (OCA Objectives 7.1 and 7.2)</h3>
+<p class="noindent"><em>7.1 Describe inheritance and its benefits.</em></p>
+<p class="noindent"><em>7.2 Develop code that demonstrates the use of polymorphism; including overriding and object type versus reference type (sic).</em></p>
+
+<p class="indentt">Inheritance está en todas partes en Java. Es seguro decir que es casi (¿casi?) imposible escribir incluso el programa Java más pequeño sin usar inheritance. Para explorar este tema, vamos a usar el operador <code>instanceof</code>, del cual hablaremos con más detalle en <a href="ch04.xhtml">Chapter 4</a>. Por ahora, solo recuerda que <code>instanceof</code> devuelve <code>true</code> si la variable de referencia que se está evaluando es del tipo con el que se compara. Este código</p>
+
+<p class="code1"><img alt="images" src="p0092-01.jpg"/></p>
+
+<p class="noindent">produce esta salida:</p>
+
+<p class="code1"><code>they’re not equal<br/>t1’s an Object</code></p>
+
+<p class="indent">¿De dónde salió ese método <code>equals</code>? La variable de referencia <code>t1</code> es de tipo <code>Test</code>, y no hay ningún método <code>equals</code> en la clase <code>Test</code>. ¿O sí? La segunda prueba <code>if</code> pregunta si <code>t1</code> es una instancia de la clase <code>Object</code>, y como <em>lo es</em> (más sobre esto en un momento), la prueba <code>if</code> tiene éxito.</p>
+
+<p class="indent">Espera un momento… ¿cómo puede <code>t1</code> ser una instancia de tipo <code>Object</code> si acabamos de decir que era de tipo <code>Test</code>? Seguro que ya te lo imaginas, pero resulta que todas las clases en Java son subclases de la clase <code>Object</code> (excepto, por supuesto, la propia clase <code>Object</code>). En otras palabras, cualquier clase que uses o escribas heredará de la clase <code>Object</code>. Siempre tendrás disponibles métodos como <code>equals</code>, <code>clone</code>, <code>notify</code>, <code>wait</code> y otros. Cada vez que creas una clase, heredas automáticamente todos los métodos de la clase <code>Object</code>.</p>
+
+<p class="indent"><span epub:type="pagebreak" id="page_91"></span>¿Por qué? Observa el método <code>equals</code>, por ejemplo. Los creadores de Java asumieron correctamente que sería muy común que los programadores quisieran comparar instancias de sus clases para comprobar igualdad. Si la clase <code>Object</code> no tuviera un método <code>equals</code>, tendrías que escribir uno tú mismo—tú y todos los demás programadores Java. Ese único método <code>equals</code> ha sido heredado miles de millones de veces. (Para ser justos, <code>equals</code> también ha sido <em>overridden</em> miles de millones de veces, pero ya llegaremos a eso.)</p>
+
+<h4 class="h4"><a id="ch02lev2sec1"></a>The Evolution of Inheritance</h4>
+
+<p class="noindent">Hasta Java 8, cuando se hablaba de inheritance, normalmente se hacía referencia a que las subclases heredaban métodos de sus superclases. Aunque esta simplificación nunca fue del todo correcta, se volvió aún menos correcta con las nuevas características disponibles en Java 8. Como muestra la siguiente tabla, ahora es posible heredar métodos concretos desde interfaces. Este es un gran cambio. Para el resto del capítulo, cuando hablemos de inheritance en general, tenderemos a usar los términos “subtypes” y “supertypes” para reconocer que tanto clases como interfaces deben tenerse en cuenta. Usaremos los términos “subclass” y “superclass” cuando hablemos de un ejemplo específico. Inheritance es un aspecto clave de la mayoría de los temas que trataremos en este capítulo, así que prepárate para MUCHAS discusiones sobre las interacciones entre supertypes y subtypes.</p>
+
+<p class="indent">Mientras estudias la siguiente tabla, notarás que desde Java 8 las interfaces pueden contener dos tipos de métodos concretos: <code>static</code> y <code>default</code>. Hablaremos de estas importantes incorporaciones más adelante en este capítulo.</p>
+
+<p class="indent"><a href="#ch2tab1">Table 2-1</a> resume los elementos de clases e interfaces en relación con inheritance.</p>
+
+<p class="tabcap"><span class="figs"><strong>TABLE 2-1</strong></span>&#160;&#160;&#160;Inheritable Elements of Classes and Interfaces</p>
+
+<p class="image-t"><a id="ch2tab1"></a><img alt="images" src="t0093-01.jpg"/></p>
+
+<p class="indent"><span epub:type="pagebreak" id="page_92"></span>Para el examen, necesitas saber que puedes crear relaciones de inheritance en Java mediante <em>extending</em> una clase o implementando una interface. También es importante entender que las dos razones más comunes para usar inheritance son</p>
+
+<p class="bulletxt"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Promover la reutilización de código</p>
+<p class="bulletxb"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Usar polymorphism</p>
+
+<p class="indent">Empecemos con la reutilización. Un enfoque de diseño común es crear una versión bastante genérica de una clase con la intención de crear subclases más especializadas que hereden de ella. Por ejemplo:</p>
+
+<p class="code1"><img alt="images" src="p0094-01.jpg"/></p>
+
+<p class="noindent">produce:</p>
+
+<p class="code1"><code>displaying shape<br/>moving game piece</code></p>
+
+<p class="indent">Observa que la clase <code>PlayerPiece</code> hereda el método genérico <code>displayShape()</code> de la clase menos especializada <code>GameShape</code> y también añade su propio método, <code>movePiece()</code>. La reutilización de código mediante inheritance significa que métodos con funcionalidad genérica—como <code>displayShape()</code>, que podría aplicarse a una amplia variedad de formas en un juego—no tienen que reimplementarse. Eso significa que todas las subclases especializadas de <code>GameShape</code> están garantizadas de tener las capacidades de la superclass más general. No quieres tener que reescribir el código de <code>displayShape()</code> en cada uno de tus componentes especializados de un juego en línea.</p>
+
+<p class="indent">Pero eso ya lo sabías. Has sufrido el dolor del código duplicado cuando haces un cambio en un sitio y tienes que rastrear todos los demás lugares donde existe ese mismo código (o uno muy similar).</p>
+
+<p class="indent">El segundo uso (relacionado) de inheritance es permitir que tus clases se accedan polimórficamente—una capacidad proporcionada también por las interfaces, pero llegaremos a eso en un momento. Supongamos que tienes una clase <code>GameLauncher</code> que quiere iterar sobre una lista de diferentes tipos de objetos <code>GameShape</code> e invocar <code>displayShape()</code> en cada uno de ellos. En el momento en que escribes esta clase, no conoces todos los posibles tipos de subclases de <code>GameShape</code> que alguien más podría escribir. Y desde luego no quieres tener que rehacer <em>tu</em> código solo porque alguien decida crear una forma de dado seis meses después.</p>
+
+<p class="indent">Lo hermoso del polymorphism (“muchas formas”) es que puedes tratar cualquier <em>subclass</em> de <code>GameShape</code> como un <code>GameShape</code>. En otras palabras, puedes escribir código en tu clase <code>GameLauncher</code> que diga: “No me importa qué tipo de objeto seas mientras heredes (extend) de <code>GameShape</code>. Y mientras extiendas <code>GameShape</code>, sé con certeza que tienes un método <code>displayShape()</code>, así que sé que puedo llamarlo.”</p>
+
+<p class="indent">Imagina que ahora tenemos dos subclases especializadas que extienden la clase más genérica <code>GameShape</code>, <code>PlayerPiece</code> y <code>TilePiece</code>:</p>
+
+<p class="code1"><img alt="images" src="p0095-01.jpg"/></p>
+
+<p class="indent"><span epub:type="pagebreak" id="page_94"></span>Ahora imagina que una clase de prueba tiene un método con un tipo de argumento declarado como <code>GameShape</code>, lo que significa que puede recibir cualquier tipo de <code>GameShape</code>. En otras palabras, cualquier subclass de <code>GameShape</code> puede pasarse a un método cuyo argumento sea de tipo <code>GameShape</code>. Este código</p>
+
+<p class="code1"><img alt="images" src="p0096-01.jpg"/></p>
+
+<p class="noindent">produce:</p>
+
+<p class="code1"><code>displaying shape<br/>displaying shape</code></p>
+
+<p class="indent">El punto clave es que el método <code>doShapes()</code> está declarado con un argumento <code>GameShape</code> pero puede recibir cualquier subtype (en este ejemplo, una subclass) de <code>GameShape</code>. El método puede entonces invocar cualquier método de <code>GameShape</code> sin preocuparse por el tipo real del objeto en tiempo de ejecución. Sin embargo, esto tiene implicaciones. El método <code>doShapes()</code> solo sabe que los objetos son un tipo de <code>GameShape</code> porque así está declarado el parámetro. Y usar una variable de referencia declarada como tipo <code>GameShape</code>—ya sea un parámetro de método, una variable local o una variable de instancia—significa que <em>solo</em> se pueden invocar los métodos de <code>GameShape</code> sobre ella. Los métodos que puedes llamar dependen totalmente del tipo <em>declarado</em> de la variable, sin importar cuál sea realmente el objeto al que la referencia apunta. Eso significa que no puedes usar una variable <code>GameShape</code> para llamar, por ejemplo, al método <code>getAdjacent()</code> incluso si el objeto pasado <em>es</em> de tipo <code>TilePiece</code>. (Veremos esto de nuevo cuando analicemos interfaces.)</p><h4 class="h4"><a id="ch02lev2sec2"></a>IS-A and HAS-A Relationships</h4>
+<p class="noindent">Note: As of Winter 2017, the OCA 8 exam won’t ask you <strong>directly</strong> about IS-A and HAS-A relationships. But understanding IS-A and HAS-A relationships will help OCA 8 candidates with many of the questions on the exam.</p>
+
+<h4 class="h4a"><span epub:type="pagebreak" id="page_95"></span>IS-A</h4>
+<p class="noindent">En OO, el concepto de IS-A se basa en inheritance (o implementación de interfaces). IS-A es una forma de decir: “Esta cosa es un tipo de esa cosa.” Por ejemplo, un Mustang es un tipo de Horse, así que en términos OO podemos decir: “Mustang IS-A Horse.” Subaru IS-A Car. Broccoli IS-A Vegetable (no uno muy divertido, pero cuenta igual). Expresas la relación IS-A en Java mediante las palabras clave <code>extends</code> (para inheritance de <em>clases</em>) e <code>implements</code> (para implementación de <em>interfaces</em>).</p>
+
+<p class="code1"><img alt="images" src="p0097-01.jpg"/></p>
+
+<p class="indent">Un Car es un tipo de Vehicle, así que el árbol de inheritance podría comenzar desde la clase <code>Vehicle</code> de la siguiente manera:</p>
+
+<p class="code1"><img alt="images" src="p0097-02.jpg"/></p>
+
+<p class="indent">En términos OO, puedes decir lo siguiente:</p>
+
+<p class="code1"><code>Vehicle is the superclass of Car.<br/>Car is the subclass of Vehicle.<br/>Car is the superclass of Subaru.<br/>Subaru is the subclass of Vehicle.<br/>Car inherits from Vehicle.<br/>Subaru inherits from both Vehicle and Car.<br/>Subaru is derived from Car.<br/>Car is derived from Vehicle.<br/>Subaru is derived from Vehicle.<br/>Subaru is a subtype of both Vehicle and Car.</code></p>
+
+<p class="indent">Volviendo a nuestra relación IS-A, las siguientes afirmaciones son verdaderas:</p>
+
+<p class="code1"><code>“Car extends Vehicle” means “Car IS-A Vehicle.”<br/>“Subaru extends Car” means “Subaru IS-A Car.”</code></p>
+
+<p class="noindent">Y también podemos decir:</p>
+
+<p class="indentt">“Subaru IS-A Vehicle”</p>
+
+<p class="noindent"><span epub:type="pagebreak" id="page_96"></span>porque se dice que una clase es “un tipo de” cualquier cosa que esté más arriba en su árbol de inheritance. Si la expresión (<code>Foo instanceof Bar)</code> es <code>true</code>, entonces la clase <code>Foo</code> IS-A <code>Bar</code>, incluso si <code>Foo</code> no extiende directamente <code>Bar</code>, sino que extiende otra clase que es una subclass de <code>Bar</code>. <a href="#ch2fig2">Figure 2-2</a> ilustra el árbol de inheritance para <code>Vehicle</code>, <code>Car</code> y <code>Subaru</code>. Las flechas van desde la subclass hacia la superclass. En otras palabras, la flecha de una clase apunta hacia la clase de la que extiende.</p>
+
+<p class="images"><a id="ch2fig2"></a><img alt="images" src="f0098-01.jpg"/></p>
+
+<p class="figcap"><span class="figs"><strong>FIGURE 2-2</strong></span>&#160;&#160;&#160;Inheritance tree for <code>Vehicle, Car, Subaru</code></p>
+
+<h4 class="h4a">HAS-A</h4>
+
+<p class="noindent">Las relaciones HAS-A se basan en el uso, más que en inheritance. En otras palabras, la clase A HAS-A B si el código en la clase A tiene una referencia a una instancia de la clase B. Por ejemplo, puedes decir lo siguiente:</p>
+
+<p class="code1"><code>A <code>Horse</code> IS-A <code>Animal</code>. A <code>Horse</code> HAS-A <code>Halter</code>.</code></p>
+
+<p class="noindent">El código podría verse así:</p>
+
+<p class="code1"><img alt="images" src="p0098-01.jpg"/></p>
+
+<p class="noindent">En este código, la clase <code>Horse</code> tiene una variable de instancia de tipo <code>Halter</code> (un halter es un tipo de equipo que podrías tener si tienes un caballo), así que puedes decir que un “<code>Horse</code> HAS-A <code>Halter</code>.” En otras palabras, <code>Horse</code> tiene una referencia a un <code>Halter</code>. El código de <code>Horse</code> puede usar esa referencia <code>Halter</code> para invocar métodos en <code>Halter</code> y obtener comportamiento de <code>Halter</code> sin tener código relacionado con <code>Halter</code> (métodos) dentro de la clase <code>Horse</code> misma. <a href="#ch2fig3">Figure 2-3</a> ilustra la relación HAS-A entre <code>Horse</code> y <code>Halter</code>.</p>
+
+<p class="images"><a id="ch2fig3"></a><img alt="images" src="f0099-01.jpg"/></p>
+
+<p class="figcap"><span epub:type="pagebreak" id="page_97"></span><span class="figs"><strong>FIGURE 2-3</strong></span>&#160;&#160;&#160;HAS-A relationship between <code>Horse</code> and <code>Halter</code></p>
+
+<p class="indent">Las relaciones HAS-A te permiten diseñar clases que siguen buenas prácticas OO evitando clases monolíticas que hacen un millón de cosas distintas. Las clases (y los objetos resultantes) deben ser especialistas. Como dice nuestro amigo Andrew: “Las clases especializadas pueden realmente ayudar a reducir bugs.” Cuanto más especializada sea la clase, más probable es que puedas reutilizarla en otras aplicaciones. Si pones todo el código relacionado con <code>Halter</code> directamente en la clase <code>Horse</code>, terminarás duplicando código en la clase <code>Cow</code>, la clase <code>UnpaidIntern</code> y cualquier otra clase que pueda necesitar comportamiento de <code>Halter</code>. Manteniendo el código de <code>Halter</code> en una clase <code>Halter</code> separada y especializada, tienes la oportunidad de reutilizar la clase <code>Halter</code> en múltiples aplicaciones.</p>
+
+<p class="indent">Los usuarios de la clase <code>Horse</code> (es decir, el código que llama métodos en una instancia de <code>Horse</code>) piensan que la clase <code>Horse</code> tiene comportamiento de <code>Halter</code>. La clase <code>Horse</code> podría tener, por ejemplo, un método <code>tie(LeadRope rope)</code>. Los usuarios de la clase <code>Horse</code> nunca deberían tener que saber que cuando invocan el método <code>tie()</code>, el objeto <code>Horse</code> delega la llamada a su clase <code>Halter</code> invocando <code>myHalter.tie(rope)</code>. El escenario descrito podría verse así:</p>
+
+<p class="code1"><img alt="images" src="p0099-01.jpg"/></p>
+
+<p class="indent"><span epub:type="pagebreak" id="page_98"></span>En OO, no queremos que los llamadores se preocupen por qué clase u objeto está haciendo realmente el trabajo. Para que eso ocurra, la clase <code>Horse</code> oculta los detalles de implementación a los usuarios de <code>Horse</code>. Los usuarios de <code>Horse</code> piden al objeto <code>Horse</code> que haga cosas (en este caso, que se ate), y el <code>Horse</code> lo hará él mismo o, como en este ejemplo, pedirá a otra cosa (quizá un método heredado de la clase <code>Animal</code>) que lo haga. Para el llamador, sin embargo, siempre parece que el objeto <code>Horse</code> se ocupa de sí mismo. Los usuarios de un <code>Horse</code> ni siquiera deberían necesitar saber que existe una clase llamada <code>Halter</code>.</p>
+
+<div class="sidebar">
+<p class="sideh"><strong>FROM THE CLASSROOM</strong></p>
+</div>
+
+<div class="sidebar1">
+<p class="sidehl"><strong>Object-Oriented Design</strong></p>
+
+<p class="noindent">Las relaciones IS-A y HAS-A y la encapsulación son solo la punta del iceberg cuando se trata de diseño OO. Muchos libros y tesis de posgrado se han dedicado a este tema. La razón del énfasis en un diseño adecuado es simple: dinero. Se ha estimado que el coste de entregar una aplicación software puede ser hasta diez veces más caro para programas mal diseñados.</p>
+
+<p class="indent">Incluso los mejores diseñadores OO (a menudo llamados “arquitectos”) cometen errores. Es difícil visualizar las relaciones entre cientos o incluso miles de clases. Cuando se descubren errores durante la fase de implementación (escritura de código) de un proyecto, la cantidad de código que debe reescribirse puede significar que los equipos de programación tengan que empezar desde cero.</p>
+
+<p class="indent">La industria del software ha evolucionado para ayudar al diseñador. Los lenguajes de modelado de objetos visuales, como el Unified Modeling Language (UML), permiten a los diseñadores crear y modificar clases fácilmente sin tener que escribir código primero, porque los componentes OO se representan gráficamente. Esto permite a los diseñadores crear un mapa de las relaciones entre clases y les ayuda a reconocer errores antes de que comience la codificación. Otra innovación en el diseño OO son los design patterns. Los diseñadores notaron que muchos diseños OO se aplican de forma consistente de un proyecto a otro y que era útil aplicar los mismos diseños porque reducía la posibilidad de introducir nuevos errores de diseño. Los diseñadores OO empezaron entonces a compartir estos diseños entre ellos. Ahora existen muchos catálogos de estos design patterns tanto en Internet como en libros.</p>
+
+<p class="indent">Aunque aprobar el examen de certificación Java no requiere que entiendas el diseño OO con tanta profundidad, esperamos que esta información de contexto te ayude a apreciar mejor por qué los autores del examen decidieron incluir encapsulation y las relaciones IS-A y HAS-A en el examen.</p>
+
+<p class="right"><em>—Jonathan Meeks,<br/>Sun Certified Java Programmer</em></p>
+</div>
+<h3 class="h3a"><span epub:type="pagebreak" id="page_99"></span>CERTIFICATION OBJECTIVE</h3>
+<h3 class="h3n"><a id="ch02lev1sec3"></a>Polymorphism (OCA Objective 7.2)</h3>
+<p class="noindentb"><em>7.2 Develop code that demonstrates the use of polymorphism; including overriding and object type versus reference type (sic).</em></p>
+
+<p class="indent">Recuerda que cualquier objeto Java que pueda pasar más de una prueba IS-A puede considerarse polimórfico. Aparte de los objetos de tipo <code>Object</code>, <em>todos</em> los objetos Java son polimórficos en el sentido de que pasan la prueba IS-A para su propio tipo y para la clase <code>Object</code>.</p>
+
+<p class="indent">Recuerda también que la única forma de acceder a un objeto es a través de una variable de referencia. Hay algunas cosas clave que debes saber sobre las referencias:</p>
+
+<p class="bulletxt"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Una variable de referencia solo puede ser de un tipo, y una vez declarada, ese tipo nunca puede cambiar (aunque el objeto al que referencia sí puede cambiar).</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Una referencia es una variable, por lo que puede reasignarse a otros objetos (a menos que la referencia esté declarada como <code>final</code>).</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;El tipo de la variable de referencia determina los métodos que pueden invocarse en el objeto al que la variable está haciendo referencia.</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Una variable de referencia puede referirse a cualquier objeto del mismo tipo que la referencia declarada o—esta es la importante—<strong>puede referirse a cualquier</strong> <em>subtype</em> <strong>del tipo declarado.</strong></p>
+
+<p class="bulletxb"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Una variable de referencia puede declararse como tipo clase o tipo interface. Si la variable se declara como tipo interface, puede referenciar cualquier objeto de cualquier clase que <em>implements</em> la interface.</p>
+
+<p class="indent">Antes creamos una clase <code>GameShape</code> que era extendida por otras dos clases, <code>PlayerPiece</code> y <code>TilePiece</code>. Ahora imagina que quieres animar algunas de las figuras del tablero del juego. Pero no <em>todas</em> las figuras pueden ser animadas, así que ¿qué haces con la herencia de clases?</p>
+
+<p class="indent">¿Podríamos crear una clase con un método <code>animate()</code> y hacer que solo <em>algunas</em> de las subclasses de <code>GameShape</code> heredaran de esa clase? Si pudiéramos, entonces <code>PlayerPiece</code>, por ejemplo, podría extender <em>tanto</em> la clase <code>GameShape</code> como la clase <code>Animatable</code>, mientras que <code>TilePiece</code> extendería solo <code>GameShape</code>. Pero no, ¡esto no funcionará! <span epub:type="pagebreak" id="page_100"></span>Java solo soporta herencia simple de clases. Eso significa que una clase solo puede tener una única superclass inmediata. En otras palabras, si <code>PlayerPiece</code> es una clase, no hay forma de escribir algo como esto:</p>
+
+<p class="code1"><code>class PlayerPiece extends GameShape, Animatable { // NO!<br/>&#160;&#160;// more code<br/>}</code></p>
+
+<p class="indent">Una <em>clase</em> no puede <em>extender</em> más de una clase: eso significa un único padre por clase. Sin embargo, una clase <em>sí</em> puede tener múltiples ancestros, ya que la clase B podría extender la clase A, y la clase C podría extender la clase B, y así sucesivamente. Así que cualquier clase puede tener múltiples clases por encima en su árbol de inheritance, pero eso no es lo mismo que decir que una clase extiende directamente dos clases.</p>
+
+<p class="imagel"><img alt="images" src="icon.jpg"/></p>
+
+<p class="icon"><strong><em>Algunos lenguajes (como C++) permiten que una clase extienda más de una clase. Esta capacidad se conoce como “multiple inheritance”. La razón por la que los creadores de Java decidieron no permitir la herencia múltiple de clases es que puede volverse bastante confusa. En pocas palabras, el problema es que si una clase extendiera dos clases y ambas superclases tuvieran, por ejemplo, un método doStuff(), ¿qué versión heredaría la subclass? Este problema puede llevar a un escenario conocido como el “Deadly Diamond of Death”, debido a la forma del diagrama de clases que puede crearse en un diseño con herencia múltiple. El diamante se forma cuando las clases B y C extienden A, y ambas B y C heredan un método de A. Si la clase D extiende tanto B como C, y tanto B como C han sobrescrito el método de A, entonces D ha heredado, en teoría, dos implementaciones distintas del mismo método. Dibujado como un diagrama de clases, la forma de las cuatro clases parece un diamante.</em></strong></p>
+
+<p class="indent">Entonces, si eso no funciona, ¿qué más podrías hacer? Podrías simplemente poner el código <code>animate()</code> en <code>GameShape</code> y luego deshabilitar el método en las clases que no puedan ser animadas. Pero esa es una mala decisión de diseño por muchas razones: es más propensa a errores; hace que la clase <code>GameShape</code> sea menos cohesionada; y significa que la API de <code>GameShape</code> “anuncia” que todas las figuras pueden ser animadas cuando, en realidad, no es así, ya que solo algunas de las subclasses de <code>GameShape</code> podrán ejecutar el método <code>animate()</code> correctamente.</p>
+
+<div class="side-exam">
+<p class="imaget"><img alt="Images" src="examwatch.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>Para reiterar, desde Java 8, las interfaces pueden tener métodos concretos (llamados default methods). Esto permite una forma de multiple inheritance, que discutiremos más adelante en el capítulo.</em></strong></p>
+</div>
+
+<p class="indent"><span epub:type="pagebreak" id="page_101"></span>Entonces, ¿qué <em>otra</em> cosa podrías hacer? Ya sabes la respuesta: crear una interface <code>Animatable</code> y hacer que solo las subclasses de <code>GameShape</code> que puedan ser animadas implementen esa interface. Aquí está la interface:</p>
+
+<p class="code1"><img alt="images" src="p0103-01.jpg"/></p>
+
+<p class="indent">Y aquí está la clase <code>PlayerPiece</code> modificada que implementa la interface:</p>
+
+<p class="code1"><img alt="images" src="p0103-02.jpg"/></p>
+
+<p class="indent">Así que ahora tenemos un <code>PlayerPiece</code> que pasa la prueba IS-A tanto para la clase <code>GameShape</code> como para la interface <code>Animatable</code>. Eso significa que un <code>PlayerPiece</code> puede tratarse polimórficamente como una de cuatro cosas en cualquier momento, dependiendo del tipo declarado de la variable de referencia:</p>
+
+<p class="bulletxt"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Un <code>Object</code> (ya que cualquier objeto hereda de <code>Object</code>)</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Un <code>GameShape</code> (ya que <code>PlayerPiece</code> extiende <code>GameShape</code>)</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Un <code>PlayerPiece</code> (ya que eso es lo que realmente es)</p>
+
+<p class="bulletxb"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Un <code>Animatable</code> (ya que <code>PlayerPiece</code> implementa <code>Animatable</code>)</p>
+
+<p class="indent">Las siguientes son todas declaraciones legales. Observa con atención:</p>
+
+<p class="code1"><img alt="images" src="p0103-03.jpg"/></p>
+
+<p class="indent">Aquí solo hay un objeto—una instancia de tipo <code>PlayerPiece</code>—pero hay cuatro tipos distintos de variables de referencia, todas apuntando al mismo objeto en el heap. Mini test: ¿Cuál de las variables de referencia anteriores puede invocar el método <code>displayShape()</code>? Pista: solo dos de las cuatro declaraciones pueden usarse para invocar el método <code>displayShape()</code>.</p>
+
+<p class="indent">Recuerda que las invocaciones de métodos permitidas por el compilador se basan únicamente en el tipo declarado de la referencia, sin importar el tipo real del objeto. Así que, mirando <span epub:type="pagebreak" id="page_102"></span>de nuevo los cuatro tipos de referencia—<code>Object</code>, <code>GameShape</code>, <code>PlayerPiece</code> y <code>Animatable</code>—¿cuáles de estos cuatro tipos conocen el método <code>displayShape()</code>?</p>
+
+<p class="indent">Lo has adivinado: tanto la clase <code>GameShape</code> como la clase <code>PlayerPiece</code> son conocidas (por el compilador) por tener un método <code>displayShape()</code>, así que cualquiera de esos tipos de referencia puede usarse para invocar <code>displayShape()</code>. Recuerda que para el compilador, un <code>PlayerPiece</code> IS-A <code>GameShape</code>, así que el compilador dice: “Veo que el tipo declarado es <code>PlayerPiece</code>, y como <code>PlayerPiece</code> extiende <code>GameShape</code>, eso significa que <code>PlayerPiece</code> heredó el método <code>displayShape()</code>. Por lo tanto, <code>PlayerPiece</code> puede usarse para invocar el método <code>displayShape()</code>.”</p>
+
+<p class="indent">¿Qué métodos pueden invocarse cuando el objeto <code>PlayerPiece</code> está siendo referido mediante una referencia declarada como tipo <code>Animatable</code>? Solo el método <code>animate()</code>. Por supuesto, lo interesante aquí es que cualquier clase de cualquier árbol de inheritance puede también implementar <code>Animatable</code>, lo que significa que si tienes un método con un argumento declarado como tipo <code>Animatable</code>, puedes pasar objetos <code>PlayerPiece</code>, objetos <code>SpinningLogo</code> y cualquier otra cosa que sea instancia de una clase que implemente <code>Animatable</code>. Y puedes usar ese parámetro (de tipo <code>Animatable</code>) para invocar el método <code>animate()</code>, pero no el método <code>displayShape()</code> (que puede que ni siquiera tenga), ni nada más que no esté garantizado por el tipo de referencia. El compilador siempre sabe, sin embargo, que puedes invocar los métodos de la clase <code>Object</code> en cualquier objeto, así que esos siempre son seguros de llamar independientemente del tipo de referencia—clase o interface—usado para referirse al objeto.</p>
+<p class="indent">Nos hemos dejado fuera una parte importante de todo esto, y es que aunque el compilador solo conoce el tipo declarado de la referencia, la Java Virtual Machine (JVM) en tiempo de ejecución sí sabe qué objeto es realmente. Y eso significa que incluso si el método <code>displayShape()</code> del objeto <code>PlayerPiece</code> es llamado usando una variable de referencia de tipo <code>GameShape</code>, si <code>PlayerPiece</code> overridea el método <code>displayShape()</code>, ¡la JVM invocará la versión de <code>PlayerPiece</code>! La JVM mira el objeto real al otro extremo de la referencia, “ve” que ha overrideado el método del tipo de referencia declarado, e invoca el método de la clase real del objeto. Pero hay otra cosa que debes tener en cuenta:</p>
+
+<p class="bqt"><strong>Las invocaciones polimórficas de métodos se aplican solo a</strong> <strong><em>métodos de instancia.</em></strong> <strong>Siempre puedes referirte a un objeto con un tipo de referencia más general (una superclass o interface), pero en tiempo de ejecución, las ÚNICAS cosas que se seleccionan dinámicamente basándose en el</strong> <strong><em>objeto</em></strong> <strong>real (y no en el tipo de</strong> <strong><em>referencia</em></strong><strong>) son los métodos de instancia. No los métodos</strong> <strong><em>static</em></strong><strong>. No las</strong> <strong><em>variables</em></strong><strong>. Solo los métodos de instancia overrideados se invocan dinámicamente según el tipo real del objeto.</strong></p>
+
+<p class="noindent"><span epub:type="pagebreak" id="page_103"></span>Como esta definición depende de una comprensión clara del overriding y de la distinción entre métodos static y métodos de instancia, cubriremos esos temas más adelante en el capítulo.</p>
+
+<h3 class="h3a">CERTIFICATION OBJECTIVE</h3>
+
+<h3 class="h3n"><a id="ch02lev1sec4"></a>Overriding/Overloading (OCA Objectives 6.1 and 7.2)</h3>
+
+<p class="noindent"><em>6.1 Create methods with arguments and return values; including overloaded methods.</em></p>
+<p class="noindent"><em>7.2 Develop code that demonstrates the use of polymorphism; including overriding and object type versus reference type (sic).</em></p>
+
+<p class="indentt">El examen usará métodos overrideados y overloadados en muchas, muchas preguntas. Estos dos conceptos suelen confundirse (¿quizá porque tienen nombres parecidos?), pero cada uno tiene su propio conjunto único y complejo de reglas. Es importante tener muy claro qué “over” usa qué reglas.</p>
+
+<h4 class="h4"><a id="ch02lev2sec3"></a>Overridden Methods</h4>
+
+<p class="noindent">Cada vez que un tipo hereda un método de un supertype, tienes la oportunidad de overridear el método (a menos que, como aprendiste antes, el método esté marcado como <code>final</code>). El beneficio clave del overriding es la capacidad de definir comportamiento específico para un subtype concreto. El siguiente ejemplo muestra una subclass <code>Horse</code> de <code>Animal</code> overrideando la versión <code>Animal</code> del método <code>eat()</code>:</p>
+
+<p class="code1"><img alt="images" src="p0105-01.jpg"/></p>
+
+<p class="indent"><span epub:type="pagebreak" id="page_104"></span>Para los métodos abstractos que heredas de un supertype, no tienes elección: <em>debes</em> implementar el método en el subtype <strong><em>a menos que el subtype también sea abstracto.</em></strong> Los métodos abstractos deben ser <em>implementados</em> por la primera subclass concreta, pero esto es muy parecido a decir que la subclass concreta <em>overridea</em> los métodos abstractos del supertype. Así que puedes pensar en los métodos abstractos como métodos que estás obligado a overridear… tarde o temprano.</p>
+
+<p class="indent">El creador de la clase <code>Animal</code> podría haber decidido que, para fines de polymorphism, todos los subtypes de <code>Animal</code> deberían tener un método <code>eat()</code> definido de una forma única. Polimórficamente, cuando una referencia <code>Animal</code> no apunta a una instancia de <code>Animal</code>, sino a una instancia de un subtype de <code>Animal</code>, el llamador debería poder invocar <code>eat()</code> sobre la referencia <code>Animal</code>, pero el objeto real en tiempo de ejecución (por ejemplo, una instancia <code>Horse</code>) ejecutará su propia implementación específica de <code>eat()</code>. Marcar el método <code>eat()</code> como abstract es la forma del programador de <code>Animal</code> de decir a todos los desarrolladores de subclasses: “No tiene sentido que tu nuevo subtype use un método <code>eat()</code> genérico, así que tienes que crear tu <em>propia</em> implementación del método <code>eat()</code>.” Un ejemplo (no abstracto) de uso de polymorphism se ve así:</p>
+
+<p class="code1"><img alt="images" src="p0106-01.jpg"/></p>
+
+<p class="indent">En el código anterior, la clase de prueba usa una referencia <code>Animal</code> para invocar un método en un objeto <code>Horse</code>. Recuerda que el compilador solo permitirá invocar métodos de la clase <code>Animal</code> cuando se usa una referencia de tipo <code>Animal</code>. Lo siguiente no sería legal dado el código anterior:</p>
+
+<p class="code1"><img alt="images" src="p0106-02.jpg"/></p>
+
+<p class="indent"><span epub:type="pagebreak" id="page_105"></span>Para reiterar, el compilador solo mira el tipo de referencia, no el tipo de instancia. El polymorphism te permite usar una referencia de un supertype más abstracto (incluyendo una interface) para referirte a uno de sus subtypes (incluyendo implementadores de interfaces).</p>
+
+<p class="indent">El método overrideado no puede tener un modificador de acceso más restrictivo que el método que está overrideando (por ejemplo, no puedes overridear un método marcado como <code>public</code> y convertirlo en <code>protected</code>). Piénsalo: si la clase <code>Animal</code> anuncia un método <code>public eat()</code> y alguien tiene una referencia <code>Animal</code> (es decir, una referencia declarada como tipo <code>Animal</code>), esa persona asumirá que es seguro llamar a <code>eat()</code> sobre la referencia <code>Animal</code> sin importar la instancia real a la que la referencia apunte. Si un subtype pudiera colarse y cambiar el modificador de acceso en el método overrideado, entonces de repente en tiempo de ejecución—cuando la JVM invoque la versión del método del objeto real (<code>Horse</code>) en lugar de la versión del tipo de referencia (<code>Animal</code>)—el programa moriría de forma horrible. (Sin mencionar el trauma emocional de quien fue traicionado por el subtype rebelde.)</p>
+
+<p class="indent">Modifiquemos el ejemplo polimórfico que vimos antes en esta sección:</p>
+
+<p class="code1"><img alt="images" src="p0107-01.jpg"/></p>
+
+<p class="indent">Si este código compilara (que no lo hace), lo siguiente fallaría en tiempo de ejecución:</p>
+
+<p class="code1"><img alt="images" src="p0107-02.jpg"/></p>
+
+<p class="indent">La variable <code>b</code> es de tipo <code>Animal</code>, que tiene un método <code>public eat()</code>. Pero recuerda que en tiempo de ejecución, Java usa invocación virtual de métodos para seleccionar dinámicamente la versión real del método que se ejecutará, basándose en la instancia real. Una referencia <code>Animal</code> siempre puede referirse a una instancia <code>Horse</code>, porque <code>Horse</code> IS-A(n) <code>Animal</code>. <span epub:type="pagebreak" id="page_106"></span>Lo que hace posible esa referencia de supertype a una instancia de subtype es que el subtype está garantizado a poder hacer todo lo que el supertype puede hacer. Ya sea que la instancia <code>Horse</code> overridee los métodos heredados de <code>Animal</code> o simplemente los herede, cualquiera con una referencia <code>Animal</code> a una instancia <code>Horse</code> puede llamar a todos los métodos accesibles de <code>Animal</code>. Por esa razón, un método overrideado debe cumplir el contrato de la superclass.</p>
+
+<p class="indent">Nota: En <a href="ch05.xhtml">Chapter 5</a> exploraremos el manejo de excepciones en detalle. Una vez que estudies <a href="ch05.xhtml">Chapter 5</a>, apreciarás esta lista útil de reglas de overriding. Las reglas para overridear un método son las siguientes:</p>
+
+<p class="bulletxt"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;La lista de argumentos debe coincidir exactamente con la del método overrideado. Si no coinciden, podrías terminar con un método overloadado sin querer.</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;El tipo de retorno debe ser el mismo o un subtype del tipo de retorno declarado en el método original overrideado en la superclass. (Más sobre esto en unas páginas cuando hablemos de covariant returns.)</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;El nivel de acceso no puede ser más restrictivo que el del método overrideado.</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;El nivel de acceso SÍ puede ser menos restrictivo que el del método overrideado.</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Los métodos de instancia solo pueden overridearse si son heredados por el subtype. Un subtype dentro del mismo paquete que el supertype puede overridear cualquier método del supertype que no esté marcado como <code>private</code> o <code>final</code>. Un subtype en un paquete diferente solo puede overridear métodos no <code>final</code> marcados como <code>public</code> o <code>protected</code> (ya que los métodos <code>protected</code> son heredados por el subtype).</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;El método overrideado SÍ puede lanzar cualquier excepción unchecked (runtime), independientemente de si el método overrideado declara la excepción. (Más en <a href="ch05.xhtml">Chapter 5</a>.)</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;El método overrideado NO debe lanzar excepciones checked que sean nuevas o más amplias que las declaradas por el método overrideado. Por ejemplo, un método que declara una <code>FileNotFoundException</code> no puede ser overrideado por un método que declare una <code>SQLException</code>, <code>Exception</code> o cualquier otra excepción no-runtime a menos que sea una subclass de <code>FileNotFoundException</code>.</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;El método overrideado puede lanzar excepciones más estrechas o menos excepciones. Que un método overrideado “tome riesgos” no significa que la excepción del subtype overrideado deba tomar los mismos riesgos. En resumen: un método overrideado no tiene que declarar excepciones que nunca lanzará, independientemente de lo que declare el método overrideado.</p>
+
+<p class="bulletx"><span epub:type="pagebreak" id="page_107"></span><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;No puedes overridear un método marcado como <code>final</code>.</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;No puedes overridear un método marcado como <code>static</code>. Veremos un ejemplo en unas páginas cuando analicemos los métodos <code>static</code> con más detalle.</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Si un método no puede heredarse, no puedes overridearlo. Recuerda que overriding implica que estás reimplementando un método que heredaste. Por ejemplo, el siguiente código no es legal, y aunque añadieras un método <code>eat()</code> a <code>Horse</code>, no sería un override del método <code>eat()</code> de <code>Animal</code>:</p>
+
+<p class="code2"><img alt="images" src="p0109-01.jpg"/></p>
+
+<h4 class="h4a">Invoking a Supertype Version of an Overridden Method</h4>
+
+<p class="noindent">A menudo querrás aprovechar parte del código en la versión del método del supertype, pero aun así overridearlo para proporcionar comportamiento adicional específico. Es como decir: “Ejecuta la versión del método del supertype, y luego vuelve aquí abajo y termina con mi código adicional del subtype.” (Ten en cuenta que no hay ningún requisito de que la versión del supertype se ejecute antes que el código del subtype). Es fácil hacerlo en código usando la palabra clave <code>super</code> de la siguiente manera:</p>
+
+<p class="code2"><img alt="images" src="p0109-02.jpg"/></p>
+
+<p class="indent"><span epub:type="pagebreak" id="page_108"></span>De manera similar, puedes acceder a un método overrideado de una interface con la sintaxis:</p>
+
+<p class="code1"><code>InterfaceX.super.doStuff();</code></p>
+
+<p class="noindent">Nota: Usar <code>super</code> para invocar un método overrideado se aplica solo a métodos de instancia. (Recuerda que los métodos <code>static</code> no pueden overridearse). Y solo puedes usar <code>super</code> para acceder a un método en el supertype directo de un tipo, no en el supertype del supertype—es decir, <strong>no puedes</strong> escribir <code>super.super.doStuff()</code> y <strong>no puedes</strong> escribir: InterfaceX.<code>super.super.doStuff()</code>.</p>
+
+<div class="side-exam">
+<p class="imaget"><img alt="Images" src="examwatch.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>Si un método está overrideado pero usas una referencia polimórfica (supertype) para referirte al objeto subtype con el método overrideado, el compilador asume que estás llamando a la versión del método del supertype. Si la versión del supertype declara una excepción checked, pero el método overrideado del subtype no, el compilador seguirá pensando que estás llamando a un método que declara una excepción (más en <a href="ch05.xhtml">Chapter 5</a>). Veamos un ejemplo:</em></strong></p>
+
+<p class="imagel"><img alt="images" src="f0110-01.jpg"/></p>
+
+<p class="Text-icon-exam"><strong><em>Este código no compilará debido a la excepción declarada en el método <code>Animal eat()</code>. Esto ocurre aunque, en tiempo de ejecución, el método <code>eat()</code> que se usaría sería la versión de <code>Dog</code>, que no declara la excepción.</em></strong></p>
+</div>
+
+<h4 class="h4a">Examples of Illegal Method Overrides</h4>
+
+<p class="noindent">Veamos un override del método <code>eat()</code> de <code>Animal</code>:</p>
+
+<p class="code1"><code>public class Animal {<br/>&#160;&#160;public void eat() { }<br/>}</code></p>
+
+<p class="indent"><span epub:type="pagebreak" id="page_109"></span><a href="#ch2tab2">Table 2-2</a> muestra ejemplos de overrides ilegales del método <code>Animal eat()</code>, dada la versión anterior de la clase <code>Animal</code>.</p>
+
+<p class="tabcap"><span class="figs"><strong>TABLE 2-2</strong></span>&#160;&#160;&#160;Examples of Illegal Overrides</p>
+
+<p class="image-t"><a id="ch2tab2"></a><img alt="images" src="t0111-01.jpg"/></p>
+
+<h4 class="h4"><a id="ch02lev2sec4"></a>Overloaded Methods</h4>
+
+<p class="noindent">Los métodos over<em>loaded</em> te permiten reutilizar el mismo nombre de método en una clase, pero con diferentes argumentos (y, opcionalmente, un tipo de retorno distinto). Overloadar un método a menudo significa que estás siendo un poco más amable con quienes llaman a tus métodos, porque tu código asume la carga de manejar diferentes tipos de argumentos en lugar de obligar al llamador a hacer conversiones antes de invocar tu método. Las reglas no son demasiado complejas:</p>
+
+<p class="bulletxt"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Los métodos overloadados DEBEN cambiar la lista de argumentos.</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Los métodos overloadados PUEDEN cambiar el tipo de retorno.</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Los métodos overloadados PUEDEN cambiar el modificador de acceso.</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Los métodos overloadados PUEDEN declarar excepciones checked nuevas o más amplias.</p>
+
+<p class="bulletxb"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Un método puede overloadarse en el <em>mismo</em> tipo o en un <em>subtype</em>. En otras palabras, si la clase A define un método <code>doStuff(int i)</code>, la subclass B podría definir un método <code>doStuff(String s)</code> sin overridear la versión de la superclass que toma un <code>int</code>. Así, dos métodos con el mismo nombre pero en tipos distintos pueden considerarse overloadados si el subtype hereda una versión del método y luego declara otra versión overloadada en su propia definición de tipo.</p>
+
+<div class="side-exam">
+<p class="imaget"><span epub:type="pagebreak" id="page_110"></span><img alt="Images" src="examwatch.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>Los desarrolladores Java con menos experiencia suelen confundirse con las diferencias sutiles entre métodos overloadados y overrideados. Ten cuidado para reconocer cuándo un método está overloadado en lugar de overrideado. Podrías ver un método que parece violar una regla de overriding, pero que en realidad es un overload legal, como sigue:</em></strong></p>
+
+<p class="imagel"><img alt="images" src="f0112-01.jpg"/></p>
+
+<p class="Text-icon-exam"><strong><em>Es tentador ver la <code>IOException</code> como el problema porque el método overrideado <code>doStuff()</code> no declara una excepción y <code>IOException</code> es checked por el compilador. Pero el método <code>doStuff()</code> no está overrideado. La subclass Bar overloada el método <code>doStuff()</code> variando la lista de argumentos, así que la <code>IOException</code> es válida.</em></strong></p>
+</div>
+
+<h4 class="h4a">Legal Overloads</h4>
+
+<p class="noindent">Veamos un método que queremos overloadar:</p>
+
+<p class="code1"><img alt="images" src="p0112-01.jpg"/></p>
+
+<h4 class="h4a">Invoking Overloaded Methods</h4>
+
+<p class="noindent">En <a href="ch06.xhtml">Chapter 6</a> veremos cómo el boxing y los var-args afectan al overloading. (Aun así, debes prestar atención a lo que se cubre aquí).</p>
+
+<p class="indent">Cuando se invoca un método, puede existir más de un método con el mismo nombre para el tipo de objeto sobre el que estás invocando el método. Por ejemplo, la clase <code>Horse</code> podría tener tres métodos con el mismo nombre pero con diferentes listas de argumentos, lo que significa que el método está overloadado.</p>
+
+<p class="indent"><span epub:type="pagebreak" id="page_111"></span>Decidir cuál de los métodos coincidentes invocar se basa en los argumentos. Si invocas el método con un argumento <code>String</code>, se llama a la versión overloadada que toma un <code>String</code>. Si invocas un método del mismo nombre pero le pasas un <code>float</code>, se ejecutará la versión overloadada que toma un <code>float</code>. Si invocas el método del mismo nombre pero le pasas un objeto <code>Foo</code>, y no existe una versión overloadada que tome un <code>Foo</code>, entonces el compilador se quejará de que no puede encontrar una coincidencia. Los siguientes son ejemplos de invocación de métodos overloadados:</p>
+
+<p class="code1"><img alt="images" src="p0113-01.jpg"/></p>
+
+<p class="noindent">En este código <code>TestAdder</code>, la primera llamada a <code>a.addThem(b,c)</code> pasa dos <code>int</code> al método, por lo que se llama a la primera versión de <code>addThem()</code>—la versión overloadada que toma dos argumentos <code>int</code>. La segunda llamada a <code>a.addThem(22.5, 9.3)</code> pasa dos <code>double</code> al método, por lo que se llama a la segunda versión de <code>addThem()</code>—la versión overloadada que toma dos argumentos <code>double</code>.</p>
+
+<p class="indent">Invocar métodos overloadados que toman referencias a objetos en lugar de primitivos es un poco más interesante. Supón que tienes un método overloadado tal que una versión toma un <code>Animal</code> y otra toma un <code>Horse</code> (subclass de <code>Animal</code>). Si pasas un objeto <code>Horse</code> en la invocación del método, invocarás la versión overloadada que toma un <code>Horse</code>. O eso parece a primera vista:</p>
+
+<p class="code1"><img alt="images" src="p0113-02.jpg"/></p>
+
+<p class="code1"><span epub:type="pagebreak" id="page_112"></span><img alt="images" src="p0114-01.jpg"/></p>
+
+<p class="indent">La salida es la esperada:</p>
+
+<p class="code1"><code>In the Animal version<br/>In the Horse version</code></p>
+
+<p class="indent">Pero ¿qué ocurre si usas una referencia <code>Animal</code> a un objeto <code>Horse</code>?</p>
+
+<p class="code1"><code>Animal animalRefToHorse = new Horse();<br/>&#160;&#160;ua.doStuff(animalRefToHorse);</code></p>
+
+<p class="noindent">¿Cuál de las versiones overloadadas se invoca? Podrías querer responder: “La que recibe un <code>Horse</code>, ya que en tiempo de ejecución se está pasando un objeto <code>Horse</code> al método.” Pero así no funciona. El código anterior realmente imprimiría lo siguiente:</p>
+
+<p class="code1"><code>in the Animal version</code></p>
+
+<p class="noindent">Aunque el objeto real en tiempo de ejecución es un <code>Horse</code> y no un <code>Animal</code>, la elección de qué método overloadado llamar (es decir, la firma del método) NO se decide dinámicamente en tiempo de ejecución.</p>
+
+<p class="indent">Recuerda siempre que el tipo de la <em>referencia</em> (no el tipo del objeto) determina qué método overloadado se invoca.</p>
+
+<p class="indent"><strong>En resumen: qué versión over</strong><strong><em>ridden</em></strong> <strong>del método se llama (es decir, de qué clase en la jerarquía) se decide en</strong> <strong><em>runtime</em></strong> <strong>basándose en el tipo del</strong> <strong><em>objeto</em></strong><strong>, pero qué versión over</strong><strong><em>loaded</em></strong> <strong>se llama se decide en</strong> <strong><em>compile</em></strong> <strong>time basándose en el tipo de la</strong> <strong><em>referencia</em></strong> <strong>del argumento pasado.</strong></p>
+
+<p class="indent">Si invocas un método pasándole una referencia <code>Animal</code> a un objeto <code>Horse</code>, el compilador solo conoce el <code>Animal</code>, así que elige la versión overloadada que recibe un <code>Animal</code>. No importa que en tiempo de ejecución realmente se esté pasando un <code>Horse</code>.</p>
+
+<div class="side-exam">
+<p class="imaget"><span epub:type="pagebreak" id="page_113"></span><img alt="Images" src="examwatch.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>¿Puede sobrecargarse <code>main()</code>?</em></strong></p>
+<p class="imagel"><img alt="images" src="f0115-01.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>¡Por supuesto! Pero el único <code>main()</code> con superpoderes de JVM es el que tiene la firma que ya has visto unas 100 veces en este libro.</em></strong></p>
+</div>
+
+<p class="noindentt"><span class="fonts"><strong>Polymorphism in Overloaded and Overridden Methods</strong></span> ¿Cómo funciona el polymorphism con métodos overloadados? Por lo que acabamos de ver, no parece que el polymorphism importe cuando un método está overloadado. Si pasas una referencia <code>Animal</code>, se invocará la versión overloadada que recibe un <code>Animal</code>, incluso si el objeto real pasado es un <code>Horse</code>. Sin embargo, una vez que el <code>Horse</code> disfrazado de <code>Animal</code> entra en el método, el objeto <code>Horse</code> sigue siendo un <code>Horse</code> a pesar de haber sido pasado a un método que espera un <code>Animal</code>. Así que es cierto que el polymorphism no determina qué versión overloadada se llama; sin embargo, sí entra en juego cuando la decisión es sobre qué versión overrideada se invoca. Pero a veces un método está tanto overloadado como overrideado. Imagina que las clases <code>Animal</code> y <code>Horse</code> se ven así:</p>
+
+<p class="code1"><img alt="images" src="p0115-01.jpg"/></p>
+
+<p class="indent"><span epub:type="pagebreak" id="page_114"></span>Observa que la clase <code>Horse</code> tiene tanto métodos overloadados como overrideados del método <code>eat()</code>. <a href="#ch2tab3">Table 2-3</a> muestra qué versión de los tres métodos <code>eat()</code> se ejecutará dependiendo de cómo se invoquen.</p>
+
+<p class="tabcap"><span class="figs"><strong>TABLE 2-3</strong></span>&#160;&#160;&#160;Examples of Legal and Illegal Overrides</p>
+
+<p class="image-t"><a id="ch2tab3"></a><img alt="images" src="t0116-01.jpg"/></p>
+
+<div class="side-exam">
+<p class="imaget"><img alt="Images" src="examwatch.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>No te dejes engañar por un método que está overloadado pero no overrideado por una subclass. Es perfectamente legal hacer lo siguiente:</em></strong></p>
+
+<p class="imagel"><img alt="images" src="f0116-01.jpg"/></p>
+
+<p class="Text-icon-exam"><strong><em>La clase <code>Bar</code> tiene dos métodos <code>doStuff()</code>: la versión sin argumentos que hereda de <code>Foo</code> (y que no overridea) y la versión overloadada <code>doStuff(String s)</code> definida en la clase <code>Bar</code>. El código con una referencia a <code>Foo</code> solo puede invocar la versión sin argumentos, pero el código con una referencia a <code>Bar</code> puede invocar cualquiera de las versiones overloadadas.</em></strong></p>
+</div>
+
+<p class="indent"><span epub:type="pagebreak" id="page_115"></span><a href="#ch2tab4">Table 2-4</a> resume la diferencia entre métodos overloadados y overrideados.</p>
+
+<p class="tabcap"><span class="figs"><strong>TABLE 2-4</strong></span>&#160;&#160;&#160;Differences Between Overloaded and Overridden Methods</p>
+
+<p class="image-t"><a id="ch2tab4"></a><img alt="images" src="t0117-01.jpg"/></p>
+
+<p class="indent">Más adelante en el capítulo veremos la sobrecarga de constructores, donde también cubriremos otros temas relacionados con constructores que aparecen en el examen. <a href="#ch2fig4">Figure 2-4</a> ilustra cómo aparecen métodos overloadados y overrideados en relaciones entre clases.</p>
+
+<p class="images"><a id="ch2fig4"></a><img alt="images" src="f0117-01.jpg"/></p>
+
+<p class="figcap"><span class="figs"><strong>FIGURE 2-4</strong></span>&#160;&#160;&#160;Overloaded and overridden methods in class relationships</p>
+
+<h3 class="h3a"><span epub:type="pagebreak" id="page_116"></span>CERTIFICATION OBJECTIVE</h3>
+
+<h3 class="h3n"><a id="ch02lev1sec5"></a>Casting (OCA Objectives 2.2 and 7.3)</h3>
+
+<p class="noindent"><em>2.2 Differentiate between object reference variables and primitive variables.</em></p>
+<p class="noindent"><em>7.3 Determine when casting is necessary.</em></p>
+
+<p class="indentt">Ya has visto cómo es posible y común usar tipos de referencia generales para referirse a tipos de objetos más específicos. Es el corazón del polymorphism. Por ejemplo, esta línea de código debería ser ya algo natural para ti:</p>
+
+<p class="code1"><code>Animal animal = new Dog();</code></p>
+
+<p class="indent">Pero ¿qué ocurre cuando quieres usar esa variable de referencia <code>animal</code> para invocar un método que solo la clase <code>Dog</code> tiene? Sabes que está refiriéndose a un <code>Dog</code>, y quieres hacer algo específico de <code>Dog</code>. En el siguiente código tenemos un array de <code>Animal</code>s, y cuando encontramos un <code>Dog</code> en el array, queremos hacer algo especial de <code>Dog</code>. Aceptemos por ahora que todo este código está bien, excepto que no estamos seguros de la línea que invoca el método <code>playDead</code>.</p>
+
+<p class="code1"><img alt="images" src="p0118-01.jpg"/></p>
+
+<p class="indent">Cuando intentamos compilar este código, el compilador dice algo como esto:</p>
+
+<p class="code1"><code>cannot find symbol</code></p>
+
+<p class="noindent"><span epub:type="pagebreak" id="page_117"></span>El compilador está diciendo: “Oye, la clase <code>Animal</code> no tiene un método <code>playDead()</code>.” Modifiquemos el bloque <code>if</code>:</p>
+
+<p class="code1"><img alt="images" src="p0119-01.jpg"/></p>
+
+<p class="indent">El nuevo y mejorado bloque de código contiene un cast, que en este caso a veces se llama <em>downcast</em>, porque estamos casteando hacia abajo en el árbol de inheritance a una clase más específica. Ahora el compilador está contento. Antes de intentar invocar <code>playDead</code>, casteamos la variable <code>animal</code> al tipo <code>Dog</code>. Lo que le estamos diciendo al compilador es: “Sabemos que realmente está refiriéndose a un objeto <code>Dog</code>, así que está bien crear una nueva variable de referencia <code>Dog</code> para referirse a ese objeto.” En este caso estamos seguros, porque antes de intentar el cast hacemos una prueba <code>instanceof</code> para asegurarnos.</p>
+
+<p class="indent">Es importante saber que el compilador está obligado a confiar en nosotros cuando hacemos un downcast, incluso cuando nos equivocamos:</p>
+
+<p class="code1"><img alt="images" src="p0119-02.jpg"/></p>
+
+<p class="noindent">¡Puede ser desesperante! Este código compila. Pero cuando intentemos ejecutarlo, obtendremos una excepción, algo como esto:</p>
+
+<p class="code1"><code>java.lang.ClassCastException</code></p>
+
+<p class="indent">¿Por qué no podemos confiar en que el compilador nos ayude aquí? ¿No puede ver que <code>animal</code> es de tipo <code>Animal</code>? Todo lo que el compilador puede hacer es verificar que los dos tipos están en el mismo árbol de inheritance, de modo que dependiendo del código que haya antes del downcast, es posible que <code>animal</code> sea de tipo <code>Dog</code>. El compilador debe permitir cosas que podrían funcionar en tiempo de ejecución. Sin embargo, si el compilador sabe con certeza que el cast no podría funcionar jamás, la compilación fallará. El siguiente bloque de código NO compilará:</p>
+
+<p class="code1"><code>Animal animal = new Animal();<br/>Dog d = (Dog) animal;<br/><strong>String s = (String) animal; // animal can’t EVER be a String</strong></code></p>
+
+<p class="noindent">En este caso, obtendrás un error como este:</p>
+
+<p class="code1"><code>inconvertible types</code></p>
+
+<p class="indent"><span epub:type="pagebreak" id="page_118"></span>A diferencia del downcasting, el <em>upcasting</em> (castear <em>hacia arriba</em> en el árbol de inheritance a un tipo más general) funciona implícitamente (es decir, no tienes que escribir el cast) porque cuando haces upcast estás restringiendo implícitamente el número de métodos que puedes invocar, a diferencia del downcasting, que implica que más adelante podrías querer invocar un método más <em>específico</em>. Aquí tienes un ejemplo:</p>
+
+<p class="code1"><img alt="images" src="p0120-01.jpg"/></p>
+
+<p class="indent">Ambos upcasts anteriores compilarán y se ejecutarán sin excepción porque un <code>Dog</code> IS-A(n) <code>Animal</code>, lo que significa que cualquier cosa que un <code>Animal</code> pueda hacer, un <code>Dog</code> también puede hacer. Un <code>Dog</code> puede hacer más, por supuesto, pero el punto es que cualquiera con una referencia <code>Animal</code> puede invocar de forma segura métodos de <code>Animal</code> sobre una instancia <code>Dog</code>. Los métodos de <code>Animal</code> pueden haber sido overrideados en la clase <code>Dog</code>, pero lo que nos importa ahora es que un <code>Dog</code> siempre puede hacer al menos todo lo que un <code>Animal</code> puede hacer. El compilador y la JVM también lo saben, así que el upcast implícito siempre es legal para asignar un objeto de un subtype a una referencia de uno de sus supertypes (o interfaces). Si <code>Dog</code> implementa <code>Pet</code> y <code>Pet</code> define <code>beFriendly()</code>, entonces un <code>Dog</code> puede castearse implícitamente a <code>Pet</code>, pero el único método de <code>Dog</code> que podrás invocar entonces es <code>beFriendly()</code>, que <code>Dog</code> se vio obligado a implementar porque implementa la interface <code>Pet</code>.</p>
+
+<p class="indent">Una cosa más… si <code>Dog</code> implementa <code>Pet</code>, entonces si <code>Beagle</code> extiende <code>Dog</code> pero <code>Beagle</code> no <em>declara</em> que implementa <code>Pet</code>, ¡<code>Beagle</code> sigue siendo un <code>Pet</code>! <code>Beagle</code> es un <code>Pet</code> simplemente porque extiende <code>Dog</code>, y <code>Dog</code> ya se encargó de las partes de <code>Pet</code> tanto para sí mismo como para todos sus hijos. La clase <code>Beagle</code> siempre puede overridear cualquier método que herede de <code>Dog</code>, incluidos los métodos que <code>Dog</code> implementó para cumplir su contrato de interface.</p>
+
+<p class="indent">Y una cosa más… si <code>Beagle</code> declara que implementa <code>Pet</code>, solo para que otros que miren la API de la clase <code>Beagle</code> puedan ver fácilmente que <code>Beagle</code> IS-A <code>Pet</code> <span epub:type="pagebreak" id="page_119"></span>sin tener que mirar las superclases de <code>Beagle</code>, <code>Beagle</code> aun así no necesita implementar el método <code>beFriendly()</code> si la clase <code>Dog</code> (superclase de <code>Beagle</code>) ya se encargó de eso. En otras palabras, si <code>Beagle</code> IS-A <code>Dog</code>, y <code>Dog</code> IS-A <code>Pet</code>, entonces <code>Beagle</code> IS-A <code>Pet</code> y ya ha cumplido sus obligaciones de <code>Pet</code> para implementar el método <code>beFriendly()</code> puesto que hereda dicho método. El compilador es lo bastante inteligente como para decir: “Sé que <code>Beagle</code> ya ES un <code>Dog</code>, pero está bien hacerlo más obvio añadiendo un cast.”</p>
+
+<p class="indent">Así que no te dejes engañar por código que muestra una clase concreta que declara que implementa una interface pero no implementa los <em>métodos</em> de la interface. Antes de poder decir si el código es legal, debes saber qué han declarado los supertypes de esa clase que implementa la interface. Si cualquier supertype en su árbol de inheritance ya ha proporcionado implementaciones concretas (es decir, no abstractas) de los métodos, entonces, independientemente de si el supertype declara que implementa la interface, la subclass no está obligada a reimplementar (overridear) esos métodos.</p>
+
+<div class="side-exam">
+<p class="imaget"><img alt="Images" src="examwatch.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>Los creadores del examen te dirán que están obligados a meter toneladas de código en espacios pequeños “por culpa del motor del examen”. Aunque eso es parcialmente cierto, TAMBIÉN les gusta ofuscar. El siguiente código</em></strong></p>
+
+<p class="imagel"><img alt="images" src="f0121-01.jpg"/></p>
+
+<p class="Text-icon-exam"><strong><em>puede reemplazarse por este fragmento fácil de leer:</em></strong></p>
+
+<p class="imagel"><img alt="images" src="f0121-02.jpg"/></p>
+
+<p class="Text-icon-exam"><strong><em>En este caso el compilador necesita todos esos paréntesis; de lo contrario, piensa que se le ha entregado una sentencia incompleta.</em></strong></p>
+</div>
+
+<h3 class="h3a"><span epub:type="pagebreak" id="page_120"></span>CERTIFICATION OBJECTIVE</h3>
+
+<h3 class="h3n"><a id="ch02lev1sec6"></a>Implementing an Interface (OCA Objective 7.5)</h3>
+
+<p class="noindent"><em>7.5 Use abstract classes and interfaces.</em></p>
+
+<p class="indentt">Cuando implementas una interface, estás aceptando cumplir el contrato definido en la interface. Eso significa que aceptas proporcionar implementaciones legales para cada método abstracto definido en la interface, y que cualquiera que conozca cómo son los métodos de la interface (no cómo se implementan, sino cómo se llaman y qué devuelven) puede estar seguro de que podrá invocar esos métodos en una instancia de tu clase implementadora.</p>
+
+<p class="indent">Por ejemplo, si creas una clase que implementa la interface <code>Runnable</code> (para que tu código pueda ser ejecutado por un hilo concreto), debes proporcionar el método <code>public void run()</code>. De lo contrario, el pobre hilo podría ser instruido para ejecutar el código de tu objeto <code>Runnable</code> y—sorpresa, sorpresa—¡descubrir que el objeto no tiene método <code>run()</code>! (Momento en el cual el hilo explotaría y la JVM se estrellaría en una explosión espectacular pero horrible). Afortunadamente, Java evita este desastre ejecutando una comprobación del compilador en cualquier clase que afirme implementar una interface. Si la clase dice que implementa una interface, más le vale tener una implementación para cada método abstracto de la interface (con algunas excepciones que veremos en un momento).</p>
+
+<p class="indent">Suponiendo una interface <code>Bounceable</code> con dos métodos, <code>bounce()</code> y <code>setBounceFactor()</code>, la siguiente clase compilará:</p>
+
+<p class="code1"><img alt="images" src="p0122-01.jpg"/></p>
+
+<p class="noindent">Bien, sabemos lo que estás pensando: “Esta debe de ser la peor clase de implementación en la historia de las clases de implementación.” Aun así compila. Y se ejecuta. El contrato de la interface garantiza que una clase tendrá el método (es decir, otros pueden llamar al método sujeto al control de acceso), pero nunca garantizó una buena implementación—o incluso que haya código real dentro del cuerpo del método. (Ten en cuenta, sin embargo, que si la interface declara que un método NO es void, el código de implementación de tu clase debe incluir una sentencia return). El compilador <span epub:type="pagebreak" id="page_121"></span>nunca dirá: “Eh, disculpa, ¿pero realmente querías no poner nada entre esas llaves? HOLA. Esto es un método, ¿no debería hacer algo?”</p>
+
+<p class="indent">Las clases de implementación deben seguir las mismas reglas para implementar métodos que una clase que extiende una clase <code>abstract</code>. Para ser una clase de implementación legal, una clase no abstracta debe hacer lo siguiente:</p>
+
+<p class="bulletxt"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Proporcionar implementaciones concretas (no abstractas) para todos los métodos abstractos de la interface declarada.</p>
+
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Seguir todas las reglas para overrides legales, como las siguientes:</p>
+
+<p class="bulletxls"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;No declarar excepciones checked en los métodos de implementación excepto aquellas declaradas por el método de la interface o subclasses de las declaradas por el método de la interface.</p>
+
+<p class="bulletxls"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Mantener la firma del método de la interface y mantener el mismo tipo de retorno (o un subtype). (Pero no es necesario declarar las excepciones declaradas en el método de la interface).</p>
+
+<p class="indentt">Pero espera, ¡hay más! Una clase de implementación puede ser ella misma <code>abstract</code>. Por ejemplo, lo siguiente es legal para una clase <code>Ball</code> que implementa <code>Bounceable</code>:</p>
+
+<p class="code1"><code>abstract class Ball implements Bounceable { }</code></p>
+
+<p class="indent">¿Notas algo que falta? Nunca proporcionamos los métodos de implementación. Y está bien. Si la clase de implementación es <code>abstract</code>, puede simplemente pasar la responsabilidad a su primera subclass concreta. Por ejemplo, si la clase <code>BeachBall</code> extiende <code>Ball</code>, y <code>BeachBall</code> no es <code>abstract</code>, entonces <code>BeachBall</code> debe proporcionar una implementación para todos los métodos abstractos de <code>Bounceable</code>:</p>
+
+<div class="side-exam">
+<p class="imaget"><img alt="Images" src="examwatch.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>Las clases de implementación NO están obligadas a implementar los métodos static o default de una interface. Hablaremos de esto con más detalle más adelante en el capítulo.</em></strong></p>
+</div>
+
+<p class="code1"><img alt="images" src="p0123-01.jpg"/></p>
+<p class="code1"><img alt="images" src="p0124-01.jpg"/></p>
+
+<p class="indent"><span epub:type="pagebreak" id="page_122"></span>Busca clases que afirmen implementar una interface pero que no proporcionen las implementaciones correctas de los métodos. A menos que la clase implementadora sea abstracta, debe proporcionar implementaciones para todos los métodos abstractos definidos en la interface.</p>
+
+<p class="indent">Necesitas conocer dos reglas más, y entonces podremos dar por terminado este tema (o podremos dormirte; siempre confundimos esas dos cosas):</p>
+
+<p class="numst">1.&#160;&#160;&#160;Una clase puede implementar más de una interface. Es perfectamente legal decir, por ejemplo, lo siguiente:</p>
+
+<p class="code2"><code>public class Ball implements Bounceable, Serializable, Runnable { ... }</code></p>
+<p class="numsn">Solo puedes extender una única clase, pero puedes implementar muchas interfaces (lo cual, desde Java 8, implica una forma de herencia múltiple, que comentaremos en breve). En otras palabras, la herencia define quién y qué eres, mientras que implementar define un rol que puedes desempeñar o un sombrero que puedes ponerte, por muy diferente que seas de otra clase que implemente la misma interface (pero que provenga de un árbol de herencia distinto). Por ejemplo, una Person extiende HumanBeing (aunque para algunos eso es discutible). Pero una Person también puede implementar Programmer, Snowboarder, Employee, Parent o PersonCrazyEnoughToTakeThisExam.</p>
+<p class="numst">2.&#160;&#160;&#160;Una interface puede extender otra interface. El siguiente código es perfectamente legal:</p>
+<p class="code2"><code>public interface Bounceable extends Moveable { } // ok!</code></p>
+<p class="indentt">¿Qué significa eso? La primera clase de implementación concreta (no abstracta) de <code>Bounceable</code> debe implementar todos los métodos abstractos de <code>Bounceable</code>, más todos los métodos abstractos de <code>Moveable</code>. La subinterface, como la llamamos, simplemente añade más requisitos al contrato de la superinterface. Verás este concepto aplicado en muchas áreas de Java, especialmente en Java EE, donde a menudo tendrás que construir tu propia interface que extienda una de las interfaces de Java EE.</p>
+<p class="indent">Pero espera, porque aquí es donde se vuelve extraño. ¡Una interface puede extender más de una interface! Piénsalo un momento. Sabes que cuando hablamos de clases, lo siguiente es ilegal:</p>
+<p class="code1"><code>public class Programmer extends Employee, Geek { } // Illegal!</code></p>
+<p class="noindent"><span epub:type="pagebreak" id="page_123"></span>Como mencionamos antes, una clase no puede extender múltiples clases en Java. Sin embargo, una interface sí puede extender múltiples interfaces:</p>
+<p class="code1"><img alt="images" src="p0125-01.jpg"/></p>
+<p class="indent">En el siguiente ejemplo, <code>Ball</code> está obligada a implementar <code>Bounceable</code>, más todos los métodos abstractos de las interfaces que <code>Bounceable</code> extiende (incluyendo cualquier interface que esas interfaces extiendan, y así sucesivamente, hasta llegar a la cima de la pila… ¿o al fondo?). Así que <code>Ball</code> tendría que verse así:</p>
+<p class="code1"><img alt="images" src="p0125-02.jpg"/></p>
+<p class="indent">Si la clase <code>Ball</code> no implementa alguno de los métodos abstractos de <code>Bounceable</code>, <code>Moveable</code> o <code>Spherical</code>, el compilador saltará arriba y abajo, rojo de ira, hasta que lo haga. A menos, claro está, que la clase <code>Ball</code> esté marcada como <code>abstract</code>. En ese caso, <code>Ball</code> puede elegir implementar cualquiera, todos o ninguno de los métodos abstractos de las interfaces, dejando el resto de implementaciones a una subclass concreta de <code>Ball</code>, como sigue:</p>
+<p class="code1"><img alt="images" src="p0125-03.jpg"/></p>
+<p class="code1"><span epub:type="pagebreak" id="page_124"></span><img alt="images" src="p0126-01.jpg"/></p>
+<p class="indent"><a href="#ch2fig5">Figure 2-5</a> compara ejemplos concretos y <code>abstract</code> de extends e implements tanto para clases como para interfaces.</p>
+<p class="images"><a id="ch2fig5"></a><img alt="images" src="f0126-01.jpg"/></p>
+<p class="figcap"><span class="figs"><strong>FIGURE 2-5</strong></span>&#160;&#160;&#160;Comparing concrete and <code>abstract</code> examples of extends and implements</p>
+<h4 class="h4"><a id="ch02lev2sec5"></a>Java 8—Now with Multiple Inheritance!</h4>
+<p class="noindent">Puede que ya se te haya ocurrido que, dado que las interfaces ahora pueden tener métodos concretos y las clases pueden implementar múltiples interfaces, el espectro de la herencia múltiple y el Deadly Diamond of Death podría aparecer. Y tienes parte de razón. Una clase PUEDE implementar interfaces con firmas de métodos concretos duplicadas. Pero la buena noticia es que el compilador te protege, y si realmente quieres implementar ambas interfaces, tendrás que proporcionar un método overrideado en tu clase. Veamos el siguiente código:</p>
+<div class="side-exam">
+<p class="imaget"><span epub:type="pagebreak" id="page_125"></span><img alt="Images" src="examwatch.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>Busca usos ilegales de extends e implements. Lo siguiente muestra ejemplos de declaraciones de clases e interfaces legales e ilegales:</em></strong></p>
+<p class="imagel"><img alt="images" src="f0127-01.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>Grábate esto, y vigila abusos en las preguntas del examen. Independientemente de lo que parezca estar evaluando la pregunta, el problema real podría estar en la declaración de la clase o interface. Antes de perderte trazando un flujo complejo de hilos, comprueba si el código siquiera compila. (Ese consejo por sí solo quizá valga que nos pongas en tu testamento). (Te sorprenderá el esfuerzo que ponen los desarrolladores del examen en distraerte del problema real). (¿Cómo escribía la gente antes de que existieran los paréntesis?).</em></strong></p>
+</div>
+<p class="code1"><img alt="images" src="p0127-01.jpg"/></p>
+<p class="code1"><span epub:type="pagebreak" id="page_126"></span><img alt="images" src="p0128-01.jpg"/></p>
+<p class="noindent">Tal como está, este código NO COMPILA porque no está claro qué versión de <code>doStuff()</code> debe usarse. Para que compile, debes overridear <code>doStuff()</code> en la clase. Si descomentas el método <code>doStuff()</code> de la clase, el código compilará y, al ejecutarse, producirá la siguiente salida:</p>
+<p class="code1"><code>3</code></p>
+<h3 class="h3a">CERTIFICATION OBJECTIVE</h3>
+<h3 class="h3n"><a id="ch02lev1sec7"></a>Legal Return Types (OCA Objectives 2.2 and 6.1)</h3>
+<p class="noindent"><em>2.2 Differentiate between object reference variables and primitive variables.</em></p>
+<p class="noindent"><em>6.1 Create methods with arguments and return values; including overloaded methods.</em></p>
+<p class="indentt">Esta sección cubre dos aspectos de los tipos de retorno: qué puedes declarar como tipo de retorno y qué puedes devolver realmente como valor. Lo que puedes o no declarar es bastante directo, pero depende de si estás overrideando un método heredado o simplemente declarando un método nuevo (lo cual incluye métodos overloadados). Veremos rápidamente la diferencia entre las reglas de tipos de retorno para métodos overloadados y overrideados, porque ya lo hemos tratado en este capítulo. Cubriremos algo nuevo cuando veamos tipos de retorno polimórficos y las reglas sobre qué es legal devolver realmente.</p>
+<h4 class="h4"><a id="ch02lev2sec6"></a><span epub:type="pagebreak" id="page_127"></span>Return Type Declarations</h4>
+<p class="noindent">Esta sección analiza qué puedes declarar como tipo de retorno, lo cual depende principalmente de si estás overrideando, overloadando o declarando un método nuevo.</p>
+<h4 class="h4a">Return Types on Overloaded Methods</h4>
+<p class="noindent">Recuerda que el overloading no es más que reutilización de nombre. El método overloadado es un método completamente distinto de cualquier otro método con el mismo nombre. Así que si heredas un método pero lo overloadas en un subtype, no estás sujeto a las restricciones del overriding, lo que significa que puedes declarar cualquier tipo de retorno que quieras. Lo que no puedes hacer es cambiar <em>solo</em> el tipo de retorno. Para overloadar un método, recuerda, debes cambiar la lista de argumentos. El siguiente código muestra un método overloadado:</p>
+<p class="code1"><img alt="images" src="p0129-01.jpg"/></p>
+<p class="indent">Observa que la versión de <code>Bar</code> usa un tipo de retorno distinto. Eso es perfectamente válido. Mientras hayas cambiado la lista de argumentos, estás overloadando el método, así que el tipo de retorno no tiene que coincidir con el de la versión del supertype. Lo que NO puedes hacer es esto:</p>
+<p class="code1"><img alt="images" src="p0129-02.jpg"/></p>
+<h4 class="h4a">Overriding and Return Types and Covariant Returns</h4>
+<p class="noindent">Cuando un subtype quiere cambiar la implementación de un método heredado (override), debe definir un método que coincida exactamente con la versión heredada. O, desde Java 5, se permite cambiar el tipo de retorno en el <span epub:type="pagebreak" id="page_128"></span>método overrideado siempre que el nuevo tipo de retorno sea un <em>subtype</em> del tipo de retorno declarado en el método overrideado de la superclass.</p>
+<p class="indent">Veamos un covariant return en acción:</p>
+<p class="code1"><img alt="images" src="p0130-01.jpg"/></p>
+<p class="noindent">Desde Java 5, este código compila. Si intentaras compilarlo con un compilador 1.4 o usando el flag:</p>
+<p class="code1"><code>javac -source 1.4 Beta.java</code></p>
+<p class="noindent">obtendrías un error como este:</p>
+<p class="code1"><code>attempting to use incompatible return type</code></p>
+<p class="indent">Otras reglas se aplican al overriding, incluyendo modificadores de acceso y excepciones declaradas, pero no son relevantes para la discusión del tipo de retorno.</p>
+<div class="side-exam">
+<p class="imaget"><img alt="Images" src="examwatch.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>Para el examen, asegúrate de saber que los métodos overloadados pueden cambiar el tipo de retorno, pero los overrideados solo pueden hacerlo dentro de los límites de los covariant returns. Solo ese conocimiento te ayudará en muchas preguntas del examen.</em></strong></p>
+</div>
+<h4 class="h4"><a id="ch02lev2sec7"></a>Returning a Value</h4>
+<p class="noindent">Solo tienes que recordar seis reglas para devolver un valor:</p>
+<p class="numst">1.&#160;&#160;&#160;Puedes devolver <code>null</code> en un método cuyo tipo de retorno sea una referencia a objeto.</p><p class="code2"><img alt="images" src="p0130-02.jpg"/></p><p class="numst"><span epub:type="pagebreak" id="page_129"></span>2.&#160;&#160;&#160;An array is a perfectly legal return type.</p>
+<p class="code2"><img alt="images" src="p0131-01.jpg"/></p>
+
+<p class="numst">3.&#160;&#160;&#160;In a method with a primitive return type, you can return any value or variable that can be implicitly converted to the declared return type.</p>
+<p class="code2"><img alt="images" src="p0131-02.jpg"/></p>
+<p class="numst">4.&#160;&#160;&#160;In a method with a primitive return type, you can return any value or variable that can be explicitly cast to the declared return type.</p>
+<p class="code2"><img alt="images" src="p0131-03.jpg"/></p>
+<p class="numst">5.&#160;&#160;&#160;You must <em>not</em> return anything from a method with a void return type.</p>
+<p class="code2"><img alt="images" src="p0131-04.jpg"/></p>
+<p class="numst">6.&#160;&#160;&#160;In a method with an object reference return type, you can return any object type that can be implicitly cast to the declared return type.</p>
+<p class="code2"><img alt="images" src="p0131-05.jpg"/></p>
+<div class="side-exam">
+<p class="imaget"><span epub:type="pagebreak" id="page_130"></span><img alt="Images" src="examwatch.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>Watch for methods that declare an abstract class or interface return type, and know that any object that passes the IS-A test (in other words, would test true using the <code>instanceof</code> operator) can be returned from that method. For example:</em></strong></p>
+<p class="imagel"><img alt="images" src="f0132-01.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>This code will compile, and the return value is a subtype.</em></strong></p>
+</div>
+<h3 class="h3a">CERTIFICATION OBJECTIVE</h3>
+<h3 class="h3n"><a id="ch02lev1sec8"></a>Constructors and Instantiation<br/>(OCA Objectives 6.3 and 7.4)</h3>
+<p class="noindent"><em>6.3 Create and overload constructors; including impact on default constructors (sic)</em></p>
+<p class="noindent"><em>7.4 Use super and this to access objects and constructors.</em></p>
+<p class="indentt">Objects are constructed. You CANNOT make a new object without invoking a constructor. In fact, you can’t make a new object without invoking not just the constructor of the object’s actual class type, but also the constructor of each of its superclasses! Constructors are the code that runs whenever you use the keyword <code>new</code>. (Okay, to be a bit more accurate, there can also be initialization blocks that run when you say <code>new</code>, and we’re going to cover <code>init</code> blocks and their static initialization counterparts after we discuss constructors.) We’ve got plenty to talk about here—we’ll look at how constructors are coded, who codes them, and how they work at runtime. So grab your hardhat and a hammer, and let’s do some object building.</p>
+<h4 class="h4"><a id="ch02lev2sec8"></a><span epub:type="pagebreak" id="page_131"></span>Constructor Basics</h4>
+<p class="noindent">Every class, <em>including abstract classes</em>, MUST have a constructor. Burn that into your brain. But just because a class must have a constructor doesn’t mean the programmer has to type it. A constructor looks like this:</p>
+<p class="code1"><code>class Foo {<br/>&#160;&#160;<strong>Foo() { } // The constructor for the Foo class<br/></strong>}</code></p>
+<p class="noindent">Notice what’s missing? There’s no return type! Two key points to remember about constructors are that they have no return type, and their names must exactly match the class name. Typically, constructors are used to initialize the instance variable state, as follows:</p>
+<p class="code1"><img alt="images" src="p0133-01.jpg"/></p>
+<p class="indent">In the preceding code example, the <code>Foo</code> class does not have a no-arg constructor. That means the following will fail to compile:</p>
+<p class="code1"><code>Foo f = new Foo(); // Won’t compile, no matching constructor</code></p>
+<p class="noindent">but the following will compile:</p>
+<p class="code1"><img alt="images" src="p0133-02.jpg"/></p>
+<p class="indent">So it’s very common (and desirable) for a class to have a no-arg constructor, regardless of how many other overloaded constructors are in the class (yes, constructors can be overloaded). You can’t always make that work for your classes; occasionally you have a class where it makes no sense to create an instance without supplying information to the constructor. A <code>java.awt.Color</code> object, for example, can’t be created by calling a no-arg constructor, because that would be like saying to the JVM, “Make me a new Color object, and I really don’t care what color it is…you pick.” Do you seriously want the JVM making your style decisions?</p>
+<h4 class="h4"><a id="ch02lev2sec9"></a><span epub:type="pagebreak" id="page_132"></span>Constructor Chaining</h4>
+<p class="noindent">We know that constructors are invoked at runtime when you say <code>new</code> on some class type as follows:</p>
+<p class="code1"><code>Horse h = new Horse();</code></p>
+<p class="noindent">But what <em>really</em> happens when you say <code>new Horse()</code>? (Assume <code>Horse</code> extends <code>Animal</code> and <code>Animal</code> extends <code>Object</code>.)</p>
+<p class="numst">1.&#160;&#160;&#160;The <code>Horse</code> constructor is invoked. Every constructor invokes the constructor of its superclass with an (implicit) call to <code>super()</code>, unless the constructor invokes an overloaded constructor of the same class (more on that in a minute).</p>
+<p class="nums">2.&#160;&#160;&#160;The <code>Animal</code> constructor is invoked (<code>Animal</code> is the superclass of <code>Horse</code>).</p>
+<p class="nums">3.&#160;&#160;&#160;The <code>Object</code> constructor is invoked (<code>Object</code> is the ultimate superclass of all classes, so class <code>Animal</code> extends <code>Object</code> even though you don’t actually type “extends Object” into the <code>Animal</code> class declaration; it’s implicit.) At this point we’re on the top of the stack.</p>
+<p class="nums">4.&#160;&#160;&#160;If class <code>Object</code> had any instance variables, then they would be given their explicit values. By <em>explicit</em> values, we mean values that are assigned at the time the variables are declared, such as <code>int x = 27</code>, where <code>27</code> is the explicit value (as opposed to the default value) of the instance variable.</p>
+<p class="nums">5.&#160;&#160;&#160;The <code>Object</code> constructor completes.</p>
+<p class="nums">6.&#160;&#160;&#160;The <code>Animal</code> instance variables are given their explicit values (if any).</p>
+<p class="nums">7.&#160;&#160;&#160;The <code>Animal</code> constructor completes.</p>
+<p class="nums">8.&#160;&#160;&#160;The <code>Horse</code> instance variables are given their explicit values (if any).</p>
+<p class="numsb">9.&#160;&#160;&#160;The <code>Horse</code> constructor completes.</p>
+<p class="indent"><a href="#ch2fig6">Figure 2-6</a> shows how constructors work on the call stack.</p>
+<p class="images"><a id="ch2fig6"></a><img alt="images" src="f0134-01.jpg"/></p>
+<p class="figcap"><span class="figs"><strong>FIGURE 2-6</strong></span>&#160;&#160;&#160;Constructors on the call stack</p>
+<h4 class="h4"><a id="ch02lev2sec10"></a><span epub:type="pagebreak" id="page_133"></span>Rules for Constructors</h4>
+<p class="noindent">The following list summarizes the rules you’ll need to know for the exam (and to understand the rest of this section). You MUST remember these, so be sure to study them more than once.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Constructors can use any access modifier, including <code>private</code>. (A <code>private</code> constructor means only code within the class itself can instantiate an object of that type, so if the <code>private</code> constructor class wants to allow an instance of the class to be used, the class must provide a static method or variable that allows access to an instance created from within the class.)</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;The constructor name must match the name of the class.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Constructors must not have a return type.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;It’s legal (but stupid) to have a method with the same name as the class, but that doesn’t make it a constructor. If you see a return type, it’s a method rather than a constructor. In fact, you could have both a method and a constructor with the same name—the name of the class—in the same class, and that’s not a problem for Java. Be careful not to mistake a method for a constructor—be sure to look for a return type.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;If you don’t type a constructor into your class code, a default constructor will be automatically generated by the compiler.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;The default constructor is ALWAYS a no-arg constructor.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;If you want a no-arg constructor and you’ve typed any other constructor(s) into your class code, the compiler won’t provide the no-arg constructor (or any other constructor) for you. In other words, if you’ve typed in a constructor with arguments, you won’t have a no-arg constructor unless you typed it in yourself!</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Every constructor has, as its first statement, either a call to an overloaded constructor (<code>this()</code>) or a call to the superclass constructor (<code>super()</code>), although remember that this call can be inserted by the compiler.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;If you do type in a constructor (as opposed to relying on the compiler-generated default constructor), and you do not type in the call to <code>super()</code> or a call to <code>this()</code>, the compiler will insert a no-arg call to <code>super()</code> for you as the very first statement in the constructor.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;A call to <code>super()</code> can either be a no-arg call or can include arguments passed to the super constructor.</p>
+<p class="bulletx"><span epub:type="pagebreak" id="page_134"></span><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;A no-arg constructor is not necessarily the default (that is, compiler-supplied) constructor, although the default constructor is always a no-arg constructor. The default constructor is the one the compiler provides! Although the default constructor is always a no-arg constructor, you’re free to put in your own no-arg constructor.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;You cannot make a call to an instance method or access an instance variable until after the super constructor runs.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Only static variables and methods can be accessed as part of the call to <code>super()</code> or <code>this()</code>. (Example: <code>super(Animal.NAME)</code> is OK, because <code>NAME</code> is declared as a static variable.)</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Abstract classes have constructors, and those constructors are always called when a concrete subclass is instantiated.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Interfaces do not have constructors. Interfaces are not part of an object’s inheritance tree.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;The only way a constructor can be invoked is from within another constructor. In other words, you can’t write code that actually calls a constructor as follows:</p>
+<p class="code2a"><img alt="images" src="p0136-01.jpg"/></p>
+<h4 class="h4"><a id="ch02lev2sec11"></a>Determine Whether a Default Constructor Will Be Created</h4>
+<p class="noindent">The following example shows a <code>Horse</code> class with two constructors:</p>
+<p class="code1"><img alt="images" src="p0136-02.jpg"/></p>
+<p class="noindent">Will the compiler put in a default constructor for this class? No!</p>
+<p class="indent">How about for the following variation of the class?</p>
+<p class="code1"><code>class Horse {<br/>&#160;&#160;&#160;Horse(String name) { }<br/>}</code></p>
+<p class="noindent">Now will the compiler insert a default constructor? No!</p>
+<p class="indent"><span epub:type="pagebreak" id="page_135"></span>What about this class?</p>
+<p class="code1"><code>class Horse { }</code></p>
+<p class="noindent">Now we’re talking. The compiler will generate a default constructor for this class because the class doesn’t have any constructors defined.</p>
+<p class="indent">Okay, what about this class?</p>
+<p class="code1"><code>class Horse {<br/>&#160;&#160;&#160;void Horse() { }<br/>}</code></p>
+<p class="noindent">It might look like the compiler won’t create a constructor, since one is already in the <code>Horse</code> class. Or is it? Take another look at the preceding <code>Horse</code> class.</p>
+<p class="indent">What’s wrong with the <code>Horse()</code> constructor? It isn’t a constructor at all! It’s simply a method that happens to have the same name as the class. Remember, the return type is a dead giveaway that we’re looking at a method, not a constructor.</p>
+<p class="noindentt"><span class="fonts"><strong>How do you know for sure whether a default constructor will be created?</strong></span> Because you didn’t write any constructors in your class.</p>
+<p class="noindentt"><span class="fonts"><strong>How do you know what the default constructor will look like?</strong></span> Because...</p>
+<p class="bulletxt"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;The default constructor has the same access modifier as the class.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;The default constructor has no arguments.</p>
+<p class="bulletxb"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;The default constructor includes a no-arg call to the super constructor (<code>super()</code>).</p>
+<p class="noindent"><a href="#ch2tab5">Table 2-5</a> shows what the compiler will (or won’t) generate for your class.</p>
+<p class="tabcap"><span epub:type="pagebreak" id="page_136"></span><span class="figs"><strong>TABLE 2-5</strong></span>&#160;&#160;&#160;Compiler-Generated Constructor Code</p>
+<p class="image-t"><a id="ch2tab5"></a><img alt="images" src="t0138-01.jpg"/></p>
+<p class="noindentt"><span class="fonts"><strong>What happens if the super constructor has arguments?</strong></span> Constructors can have arguments just as methods can, and if you try to invoke a method that takes, say, an <code>int</code>, but you don’t pass anything to the method, the compiler will complain as follows:</p>
+<p class="code1"><img alt="images" src="p0137-01.jpg"/></p>
+<p class="indent">The compiler will complain that you can’t invoke <code>takeInt()</code> without passing an <code>int</code>. Of course, the compiler enjoys the occasional riddle, so the message it spits out on some versions of the JVM (your mileage may vary) is less than obvious:</p>
+<p class="code1"><code>UseBar.java:7: takeInt(int) in Bar cannot be applied to ()<br/>&#160;&#160;&#160;b.takeInt();<br/>&#160;&#160;&#160;^</code></p>
+<p class="noindent"><span epub:type="pagebreak" id="page_137"></span>But you get the idea. The bottom line is that there must be a match for the method. And by match, we mean the argument types must be able to accept the values or variables you’re passing and in the order you’re passing them. Which brings us back to constructors (and here you were thinking we’d never get there), which work exactly the same way.</p>
+<p class="indent">So if your super constructor (that is, the constructor of your immediate superclass/parent) has arguments, you must type in the call to <code>super()</code>, supplying the appropriate arguments. Crucial point: if your superclass does not have a no-arg constructor, you must type a constructor in your class (the subclass) because you need a place to put in the call to <code>super()</code> with the appropriate arguments.</p>
+<p class="indent">The following is an example of the problem:</p>
+<p class="code1"><img alt="images" src="p0139-01.jpg"/></p>
+<p class="noindent">And once again the compiler treats us with stunning lucidity:</p>
+<p class="code1"><img alt="images" src="p0139-02.jpg"/></p>
+<p class="indent">If you’re lucky (and it’s a full moon), <em>your</em> compiler might be a little more explicit. But again, the problem is that there just isn’t a match for what we’re trying to invoke with <code>super()</code>—an <code>Animal</code> constructor with no arguments.</p>
+<p class="indent">Another way to put this is that if your superclass does <em>not</em> have a no-arg constructor, then in your subclass you will not be able to use the default constructor supplied by the compiler. It’s that simple. Because the compiler can <em>only</em> put in a call to a no-arg <code>super()</code>, you won’t even be able to compile something like this:</p>
+<p class="code1"><img alt="images" src="p0139-03.jpg"/></p>
+<p class="indent"><span epub:type="pagebreak" id="page_138"></span>Trying to compile this code gives us exactly the same error we got when we put a constructor in the subclass with a call to the no-arg version of <code>super()</code>:</p>
+<p class="code1"><img alt="images" src="p0140-01.jpg"/></p>
+<p class="indent">In fact, the preceding <code>Clothing</code> and <code>TShirt</code> code is implicitly the same as the following code, where we’ve supplied a constructor for <code>TShirt</code> that’s identical to the default constructor supplied by the compiler:</p>
+<p class="code1"><img alt="images" src="p0140-02.jpg"/></p>
+<p class="indent">One last point on the whole default constructor thing (and it’s probably very obvious, but we have to say it or we’ll feel guilty for years), <strong><em>constructors are never inherited</em></strong>. They aren’t methods. They can’t be overridden (because they aren’t methods, and only instance methods can be overridden). So the type of constructor(s) your superclass has in no way determines the type of default constructor you’ll get. Some folks mistakenly believe that the default constructor somehow matches the super constructor, either by the arguments the default constructor will have (remember, the default constructor is always a no-arg) or by the arguments used in the compiler-supplied call to <code>super()</code>.</p>
+<p class="indent">So although constructors can’t be overridden, you’ve already seen that they can be overloaded, and typically are.</p>
+<h4 class="h4"><a id="ch02lev2sec12"></a>Overloaded Constructors</h4>
+<p class="noindent">Overloading a constructor means typing in multiple versions of the constructor, each having a different argument list, like the following examples:</p>
+<p class="code1"><img alt="images" src="p0140-03.jpg"/></p>
+<p class="indent"><span epub:type="pagebreak" id="page_139"></span>The preceding <code>Foo</code> class has two overloaded constructors: one that takes a string, and one with no arguments. Because there’s no code in the no-arg version, it’s actually identical to the default constructor the compiler supplies—but remember, since there’s already a constructor in this class (the one that takes a string), the compiler won’t supply a default constructor. If you want a no-arg constructor to overload the with-args version you already have, you’re going to have to type it yourself, just as in the <code>Foo</code> example.</p>
+<p class="indent">Overloading a constructor is typically used to provide alternate ways for clients to instantiate objects of your class. For example, if a client knows the animal name, they can pass that to an <code>Animal</code> constructor that takes a string. But if they don’t know the name, the client can call the no-arg constructor, and that constructor can supply a default name. Here’s what it looks like:</p>
+<p class="code1"><img alt="images" src="p0141-01.jpg"/></p>
+<p class="indent">Running the code four times produces this output:</p>
+<p class="code1"><img alt="images" src="p0141-02.jpg"/></p>
+<p class="code1"><span epub:type="pagebreak" id="page_140"></span><img alt="images" src="p0142-01.jpg"/></p>
+<p class="indent">There’s a lot going on in the preceding code. <a href="#ch2fig7">Figure 2-7</a> shows the call stack for constructor invocations when a constructor is overloaded.</p>
+<p class="images"><a id="ch2fig7"></a><img alt="images" src="f0142-01.jpg"/></p>
+<p class="figcap"><span class="figs"><strong>FIGURE 2-7</strong></span>&#160;&#160;&#160;Overloaded constructors on the call stack</p>
+<p class="indent">Take a look at the call stack, and then let’s walk through the code straight from the top.</p>
+<p class="bulletxt"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;<strong>L</strong><strong>ine 2</strong> Declare a <code>String</code> instance variable name.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;<strong>L</strong><strong>ines 3–5</strong> Constructor that takes a <code>String</code> and assigns it to instance variable name.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;<strong>L</strong><strong>ine 7</strong> Here’s where it gets fun. Assume every animal needs a name, but the client (calling code) might not always know what the name should be, so the <code>Animal</code> class will assign a random name. The no-arg constructor generates a name by invoking the <code>makeRandomName()</code> method.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;<strong>L</strong><strong>ine 8</strong> The no-arg constructor invokes its own overloaded constructor that takes a <code>String</code>, in effect calling it the same way it would be called if client code were doing a <code>new</code> to instantiate an object, passing it a <code>String</code> for the name. The overloaded invocation uses the keyword <code>this</code>, but uses it as though it were a method named <code>this()</code>. So line 8 is simply calling the constructor on line 3, passing it a randomly selected <code>String</code> rather than a client-code chosen name.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;<strong>L</strong><strong>ine 11</strong> Notice that the <code>makeRandomName()</code> method is marked <code>static</code>! That’s because you cannot invoke an instance (in other words, nonstatic) <span epub:type="pagebreak" id="page_141"></span>method (or access an instance variable) until after the <code>super</code> constructor has run. And since the <code>super</code> constructor will be invoked from the constructor on line 3, rather than from the one on line 7, line 8 can use only a static method to generate the name. If we wanted all <code>animal</code>s not specifically named by the caller to have the same default name, say, “Fred,” then line 8 could have read <code>this(“Fred”);</code> rather than calling a method that returns a string with the randomly chosen name.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;<strong>L</strong><strong>ine 12</strong> This doesn’t have anything to do with constructors, but since we’re all here to learn, it generates a random integer between 0 and 4.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;<strong>L</strong><strong>ine 13</strong> Weird syntax, we know. We’re creating a new <code>String</code> object (just a single <code>String</code> instance), but we want the string to be selected randomly from a list. Except we don’t have the list, so we need to make it. So in that one line of code we</p>
+<p class="numl">1. Declare a <code>String</code> variable name.</p>
+<p class="numl">2. Create a <code>String</code> array (anonymously—we don’t assign the array itself to a variable).</p>
+<p class="numl">3. Retrieve the string at index <code>[x]</code> (x being the random number generated on line 12) of the newly created <code>String</code> array.</p>
+<p class="numl">4. Assign the string retrieved from the array to the declared instance variable name. We could have made it much easier to read if we’d just written</p>
+<p class="code2a"><img alt="images" src="p0143-01.jpg"/></p>
+<p class="numln">But where’s the fun in that? Throwing in unusual syntax (especially for code wholly unrelated to the real question) is in the spirit of the exam. Don’t be startled! (Okay, be startled, but then just say to yourself, “Whoa!” and get on with it.)</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;<strong>L</strong><strong>ine 18</strong> We’re invoking the no-arg version of the constructor (causing a random name from the list to be passed to the other constructor).</p>
+<p class="bulletxb"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;<strong>L</strong><strong>ine 20</strong> We’re invoking the overloaded constructor that takes a string representing the name.</p>
+<p class="indent">The key point to get from this code example is in line 8. Rather than calling <code>super()</code>, we’re calling <code>this()</code>, and <code>this()</code> always means a call to another constructor in the same class. Okay, fine, but what happens after the call to <code>this()</code>? <span epub:type="pagebreak" id="page_142"></span>Sooner or later the <code>super()</code> constructor gets called, right? Yes, indeed. A call to <code>this()</code> just means you’re delaying the inevitable. Some constructor, somewhere, must make the call to <code>super()</code>.</p>
+<p class="bqt"><strong>Key Rule: The first line in a constructor must be a call to</strong> <code><strong>super()</strong></code><strong>or a call to</strong> <code><strong>this()</strong></code>.</p>
+<p class="noindent">No exceptions. If you have neither of those calls in your constructor, the compiler will insert the no-arg call to <code>super()</code>. In other words, if constructor <code>A()</code> has a call to <code>this()</code>, the compiler knows that constructor <code>A()</code> will not be the one to invoke <code>super()</code>.</p>
+<p class="indent">The preceding rule means a constructor can never have both a call to <code>super()</code> and a call to <code>this()</code>. Because each of those calls must be the first statement in a constructor, you can’t legally use both in the same constructor. That also means the compiler will not put a call to <code>super()</code> in any constructor that has a call to <code>this()</code>.</p>
+<p class="indent">Thought question: What do you think will happen if you try to compile the following code?</p>
+<p class="code1"><img alt="images" src="p0144-01.jpg"/></p>
+<p class="indent">Your compiler may not actually catch the problem (it varies depending on your compiler, but most won’t catch the problem). It assumes you know what you’re doing. Can you spot the flaw? Given that a <code>super</code> constructor must always be called, where would the call to <code>super()</code> go? Remember, the compiler won’t put in a default constructor if you’ve already got one or more constructors in your class. And when the compiler doesn’t put in a default constructor, it still inserts a call to <code>super()</code> in any constructor that doesn’t explicitly have a call to the <code>super</code> constructor—unless, that is, the constructor already has a call to <code>this()</code>. So in the preceding code, where can <code>super()</code> go? The only two constructors in the class both have calls to <code>this()</code>, and, in fact, you’ll get exactly what you’d get if you typed the following method code:</p>
+<p class="code1"><code>public void go() {<br/>&#160;&#160;&#160;doStuff();<br/>}<br/><br/>public void doStuff() {<br/>&#160;&#160;&#160;go();<br/>}</code></p>
+<p class="indent"><span epub:type="pagebreak" id="page_143"></span>Now can you see the problem? Of course you can. The stack explodes! It gets higher and higher and higher until it just bursts open and method code goes spilling out, oozing out of the JVM right onto the floor. Two overloaded constructors both calling <code>this()</code> are two constructors calling each other—over and over and over, resulting in this:</p>
+<p class="code1"><code>% java A<br/>Exception in thread “main” java.lang.StackOverflowError</code></p>
+<p class="indent">The benefit of having overloaded constructors is that you offer flexible ways to instantiate objects from your class. The benefit of having one constructor invoke another overloaded constructor is to avoid code duplication. In the <code>Animal</code> example, there wasn’t any code other than setting the name, but imagine if after line 4 there was still more work to be done in the constructor. By putting all the other constructor work in just one constructor, and then having the other constructors invoke it, you don’t have to write and maintain multiple versions of that other important constructor code. Basically, each of the other not-the-real-one overloaded constructors will call another overloaded constructor, passing it whatever data it needs (data the client code didn’t supply).</p>
+<p class="indent">Constructors and instantiation become even more exciting (just when you thought it was safe) when you get to inner classes, but we know you can stand to have only so much fun in one chapter, and besides, you don’t have to deal with inner classes until you tackle the OCP exam.</p>
+<h3 class="h3a">CERTIFICATION OBJECTIVE</h3>
+<h3 class="h3n"><a id="ch02lev1sec9"></a>Initialization Blocks (OCA Objectives 1.2 and 6.3-ish)</h3>
+<p class="noindent"><em>1.2 Define the structure of a Java class</em></p>
+<p class="noindent"><em>6.3 Create and overload constructors; including impact on default constructors</em></p>
+<p class="indentt">We’ve talked about two places in a class where you can put code that performs operations: methods and constructors. Initialization blocks are the third place in a Java program where operations can be performed. Static initialization blocks run <span epub:type="pagebreak" id="page_144"></span>when the class is first loaded, and instance initialization blocks run whenever an instance is created (a bit similar to a constructor). Let’s look at an example:</p>
+<p class="code1"><img alt="images" src="p0146-01.jpg"/></p>
+<p class="indent">As you can see, the syntax for initialization blocks is pretty terse. They don’t have names, they can’t take arguments, and they don’t return anything. A <em>static</em> initialization block runs <em>once</em> when the class is first loaded. An <em>instance</em> initialization block runs once <em>every time a new instance is created</em>. Remember when we talked about the order in which constructor code executed? Instance <code>init</code> block code runs right after the call to <code>super()</code> in a constructor—in other words, after all <code>super</code> constructors have run.</p>
+<p class="indent">You can have many initialization blocks in a class. It is important to note that unlike methods or constructors, <em>the order in which initialization blocks appear in a class matters</em>. When it’s time for initialization blocks to run, if a class has more than one, they will run in the order in which they appear in the class file—in other words, from the top down. Based on the rules we just discussed, can you determine the output of the following program?</p>
+<p class="code1"><img alt="images" src="p0146-02.jpg"/></p>
+<p class="indent">To figure this out, remember these rules:</p>
+<p class="bulletxt"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;<code>i</code><code>nit</code> blocks execute in the order in which they appear.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Static <code>init</code> blocks run once, when the class is first loaded.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Instance <code>init</code> blocks run every time a class instance is created.</p>
+<p class="bulletxb"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;Instance <code>init</code> blocks run after the constructor’s call to <code>super()</code>.</p>
+<p class="indent"><span epub:type="pagebreak" id="page_145"></span>With those rules in mind, the following output should make sense:</p>
+<p class="code1"><img alt="images" src="p0147-01.jpg"/></p>
+<p class="indent">As you can see, the instance <code>init</code> blocks each ran twice. Instance <code>init</code> blocks are often used as a place to put code that all the constructors in a class should share. That way, the code doesn’t have to be duplicated across constructors.</p>
+<p class="indent">Finally, if you make a mistake in your static <code>init</code> block, the JVM can throw an <code>ExceptionInInitializerError</code>. Let’s look at an example:</p>
+<p class="code1"><img alt="images" src="p0147-02.jpg"/></p>
+<p class="noindent">It produces something like this:</p>
+<p class="code1"><img alt="images" src="p0147-03.jpg"/></p>
+<div class="side-exam">
+<p class="imaget"><img alt="Images" src="examwatch.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>By convention, <code>init</code> blocks usually appear near the top of the class file, somewhere around the constructors. However, this is the OCA exam we’re talking about. Don’t be surprised if you find an <code>init</code> block tucked in between a couple of methods, looking for all the world like a compiler error waiting to happen!</em></strong></p>
+</div>
+<h3 class="h3a"><span epub:type="pagebreak" id="page_146"></span>CERTIFICATION OBJECTIVE</h3>
+<h3 class="h3n"><a id="ch02lev1sec10"></a>Statics (OCA Objective 6.2)</h3>
+<p class="noindent"><em>6.2 Apply the static keyword to methods and fields.</em></p>
+<h4 class="h4"><a id="ch02lev2sec13"></a>Static Variables and Methods</h4>
+<p class="noindent">The <code>static</code> modifier has such a profound impact on the behavior of a method or variable that we’re treating it as a concept entirely separate from the other modifiers. To understand the way a <code>static</code> member works, we’ll look first at a reason for using one. Imagine you’ve got a utility class or interface with a method that always runs the same way; its sole function is to return, say, a random number. It wouldn’t matter which instance of the class performed the method—it would always behave exactly the same way. In other words, the method’s behavior has no dependency on the state (instance variable values) of an object. So why, then, do you need an object when the method will never be instance-specific? Why not just ask the type itself to run the method?</p>
+<p class="indent">Let’s imagine another scenario: Suppose you want to keep a running count of all instances instantiated from a particular class. Where do you actually keep that variable? It won’t work to keep it as an instance variable within the class whose instances you’re tracking, because the count will just be initialized back to a default value with each new instance. The answer to both the utility-method-always-runs-the-same scenario and the keep-a-running-total-of-instances scenario is to use the <code>static</code> modifier. Variables and methods marked <code>static</code> belong to the type, rather than to any particular instance. In fact, for classes, you can use a <code>static</code> method or variable without having any instances of that class at all. You need only have the type available to be able to invoke a <code>static</code> method or access a <code>static</code> variable. <code>static</code> variables, too, can be accessed without having an instance of a class. But if there are instances, a <code>static</code> variable of a class will be shared by all instances of that class; there is only one copy.</p>
+<p class="indent">The following code declares and uses a <code>static</code> counter variable:</p>
+<p class="code1"><img alt="images" src="p0148-01.jpg"/></p>
+<p class="code1"><img alt="images" src="p0149-01.jpg"/></p>
+<p class="indent"><span epub:type="pagebreak" id="page_147"></span>In the preceding code, the <code>static frogCount</code> variable is set to zero when the <code>Frog</code> class is first loaded by the JVM, before any <code>Frog</code> instances are created! (By the way, you don’t actually need to initialize a static variable to zero; static variables get the same default values instance variables get.) Whenever a <code>Frog</code> instance is created, the <code>Frog</code> constructor runs and increments the <code>static</code> <code>frogCount</code> variable. When this code executes, three <code>Frog</code> instances are created in <code>main()</code>, and the result is</p>
+<p class="code1"><code>Frog count is now 3</code></p>
+<p class="indent">Now imagine what would happen if <code>frogCount</code> were an instance variable (in other words, nonstatic):</p>
+<p class="code1"><img alt="images" src="p0149-02.jpg"/></p>
+<p class="noindent">When this code executes, it should still create three <code>Frog</code> instances in <code>main()</code>, but the result is…a compiler error! We can’t get this code to compile, let alone run.</p>
+<p class="code1"><img alt="images" src="p0149-03.jpg"/></p>
+<p class="indent">The JVM doesn’t know which Frog object’s <code>frogCount</code> you’re trying to access. The problem is that <code>main()</code> is itself a <code>static</code> method and thus isn’t running against any particular instance of the class; instead it’s running on the class itself. A <code>static</code> method can’t access a nonstatic (instance) variable because there is no <span epub:type="pagebreak" id="page_148"></span>instance! That’s not to say there aren’t instances of the class alive on the heap, but rather that even if there are, the <code>static</code> method doesn’t know anything about them. The same applies to instance methods; a <code>static</code> method can’t directly invoke a nonstatic method. Think static = class, nonstatic = instance. Making the method called by the JVM (<code>main()</code>) a <code>static</code> method means the JVM doesn’t have to create an instance of your class just to start running code.</p>
+<div class="side-exam">
+<p class="imaget"><img alt="Images" src="examwatch.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>One of the mistakes most often made by new Java programmers is attempting to access an instance variable (which means nonstatic variable) from the static <code>main()</code> method (which doesn’t know anything about any instances, so it can’t access the variable). The following code is an example of illegal access of a nonstatic variable from a <code>static</code> method:</em></strong></p>
+<p class="imagel"><img alt="images" src="f0150-01.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>Understand that this code will never compile, because you can’t access a nonstatic (instance) variable from a <code>static</code> method. Just think of the compiler saying, “Hey, I have no idea which <code>Foo</code> object’s <code>x</code> variable you’re trying to print!” Remember, it’s the class running the <code>main()</code> method, not an instance of the class.</em></strong></p>
+<p class="indent"><strong><em>Of course, the tricky part for the exam is that the question won’t look as obvious as the preceding code. The problem you’re being tested for—accessing a nonstatic variable from a <code>static</code> method—will be buried in code that might appear to be testing something else. For example, the preceding code would be more likely to appear as</em></strong></p>
+<p class="imagel"><img alt="images" src="f0150-02.jpg"/></p>
+<p class="Text-icon-exam"><strong><em>So while you’re trying to follow the logic, the real issue is that x and y can’t be used within <code>main()</code> because <code>x</code> and <code>y</code> are instance, not static, variables! The same applies for accessing nonstatic methods from a <code>static</code> method. The rule is, a static method of a class can’t access a nonstatic (instance) method or variable of its own class.</em></strong></p>
+</div>
+<h4 class="h4a"><span epub:type="pagebreak" id="page_149"></span>Accessing Static Methods and Variables</h4>
+<p class="noindent">Since you don’t need to have an instance in order to invoke a static method or access a static variable, how do you invoke or use a <code>static</code> member? What’s the syntax? We know that with a regular old instance method, you use the dot operator on a reference to an instance:</p>
+<p class="code1"><img alt="images" src="p0151-01.jpg"/></p>
+<p class="indent">In the preceding code, we instantiate a <code>Frog</code>, assign it to the reference variable <code>f</code>, and then use that <code>f</code> reference to invoke a method on the <code>Frog</code> instance we just created. In other words, the <code>getFrogSize()</code> method is being invoked on a specific <code>Frog</code> object on the heap.</p>
+<p class="indent">But this approach (using a reference to an object) isn’t appropriate for accessing a <code>static</code> method, because there might not be any instances of the class at all! So the way we access a <code>static</code> method (or <code>static</code> variable) is to use the dot operator on the type name, as opposed to using it on a reference to an instance, as follows:</p>
+<p class="code1"><img alt="images" src="p0151-02.jpg"/></p>
+<p class="code1"><span epub:type="pagebreak" id="page_150"></span><img alt="images" src="p0152-01.jpg"/></p>
+<p class="noindent">which produces the output:</p>
+<p class="code1"><code>from static 3<br/>from instance 4<br/>use ref var 5</code></p>
+<p class="indent">But just to make it really confusing, the Java language also allows you to use an object reference variable to access a <code>static</code> member. Did you catch the last line of <code>main()</code>? It included this invocation:</p>
+<p class="code1"><code><strong>f.getCount();</strong> // Access a static using an instance variable</code></p>
+<p class="indent">In the preceding code, we instantiate a <code>Frog</code>, assign the new <code>Frog</code> object to the reference variable <code>f</code>, and then use the <code>f</code> reference to invoke a <code>static</code> method! But even though we are using a specific <code>Frog</code> instance to access the <code>static</code> method, the rules haven’t changed. This is merely a syntax trick to let you use an object reference variable (but not the object it refers to) to get to a <code>static</code> method or variable, but the <code>static</code> member is still unaware of the particular instance used to invoke the <code>static</code> member. In the <code>Frog</code> example, the compiler knows that the reference variable <code>f</code> is of type <code>Frog</code>, and so the <code>Frog</code> class <code>static</code> method is run with no awareness or concern for the <code>Frog</code> instance at the other end of the <code>f</code> reference. In other words, the compiler cares only that reference variable <code>f</code> is declared as type <code>Frog</code>.</p>
+<p class="indent">Invoking static methods from interfaces is almost the same as invoking static methods from classes, except the “instance variable syntax trick” just discussed works only for static methods in classes. The following code demonstrates how interface static methods can and cannot be invoked:</p>
+<p class="code1"><img alt="images" src="p0152-02.jpg"/></p>
+<p class="code1"><span epub:type="pagebreak" id="page_151"></span><img alt="images" src="p0153-01.jpg"/></p>
+<p class="indent">Let’s review the code:</p>
+<p class="bulletxt"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;<strong>L</strong><strong>ine 1</strong> is a legal invocation of an interface’s <code>default</code> method.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;<strong>L</strong><strong>ine 2</strong> is an <strong>illegal</strong> attempt to invoke an interface’s <code>static</code> method.</p>
+<p class="bulletx"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;<strong>L</strong><strong>ine 3</strong> is THE legal way to invoke an interface’s <code>static</code> method.</p>
+<p class="bulletxb"><img alt="images" src="boxs.jpg"/>&#160;&#160;&#160;<strong>L</strong><strong>ine 4</strong> is another <strong>illegal</strong> attempt to invoke an interface’s <code>static</code> method.</p>
+<p class="indent"><a href="#ch2fig8">Figure 2-8</a> illustrates the effects of the <code>static</code> modifier on methods and variables.</p>
+<p class="images"><a id="ch2fig8"></a><img alt="images" src="f0153-01.jpg"/></p>
+<p class="figcap"><span class="figs"><strong>FIGURE 2-8</strong></span>&#160;&#160;&#160;The effects of <code>static</code> on methods and variables</p>
+<p class="indent"><span epub:type="pagebreak" id="page_152"></span>Finally, remember that <code><em>static</em></code> <em>methods can’t be overridden</em>! This doesn’t mean they can’t be redefined in a subclass, but redefining and overriding aren’t the same thing. Let’s look at an example of a redefined (remember, not overridden) <code>static</code> method:</p>
+<p class="code1"><img alt="images" src="p0154-01.jpg"/></p>
+<p class="indent">Running this code produces this output:</p>
+<p class="code1"><code>a a a d</code></p>
+<p class="indent">Remember, the syntax a <code>[x].doStuff()</code> is just a shortcut (the syntax trick)—the compiler is going to substitute something like <code>Animal.doStuff()</code> instead. Notice also that you can invoke a <code>static</code> method by using the class name.</p>
+<p class="indent">Notice that we didn’t use the <em>enhanced</em> for <em>loop</em> here (covered in <a href="ch05.xhtml">Chapter 5</a>), even though we could have. Expect to see a mix of both Java 1.4 and Java 5–8 coding styles and practices on the exam.</p>
+<h3 class="h3"><a id="ch02lev1sec11"></a><span class="under">CERTIFICATION SUMMARY</span></h3>
+<p class="noindent">We started the chapter by discussing the importance of encapsulation in good OO design, and then we talked about how good encapsulation is implemented: with private instance variables and public getters and setters.</p>
+<p class="indent">Next, we covered the importance of inheritance, so that you can grasp overriding, overloading, polymorphism, reference casting, return types, and constructors.</p>
+<p class="indent"><span epub:type="pagebreak" id="page_153"></span>We covered IS-A and HAS-A. IS-A is implemented using inheritance, and HAS-A is implemented by using instance variables that refer to other objects.</p>
+<p class="indent">Polymorphism was next. Although a reference variable’s type can’t be changed, it can be used to refer to an object whose type is a subtype of its own. We learned how to determine what methods are invocable for a given reference variable.</p>
+<p class="indent">We looked at the difference between overridden and overloaded methods, learning that an overridden method occurs when a subtype inherits a method from a supertype and then reimplements the method to add more specialized behavior. We learned that, at runtime, the JVM will invoke the subtype version on an instance of a subtype and the supertype version on an instance of the supertype. <code>Abstract</code> methods must be “overridden” (technically, <code>abstract</code> methods must be implemented, as opposed to overridden, since there really isn’t anything to override).</p>
+<p class="indent">We saw that overriding methods must declare the same argument list and return type or they can return a subtype of the declared return type of the supertype’s overridden method), and that the access modifier can’t be more restrictive. The overriding method also can’t throw any new or broader checked exceptions that weren’t declared in the overridden method. You also learned that the overridden method can be invoked using the syntax <code>super.doSomething();</code>.</p>
+<p class="indent">Overloaded methods let you reuse the same method name in a class, but with different arguments (and, optionally, a different return type). Whereas overriding methods must not change the argument list, overloaded methods must. But unlike overriding methods, overloaded methods are free to vary the return type, access modifier, and declared exceptions any way they like.</p>
+<p class="indent">We learned the mechanics of casting (mostly downcasting) reference variables and when it’s necessary to do so.</p>
+<p class="indent">Implementing interfaces came next. An interface describes a <em>contract</em> that the implementing class must follow. The rules for implementing an interface are similar to those for extending an <code>abstract</code> class. As of Java 8, interfaces can have concrete methods, which are labeled <code>default</code>. Also, remember that a class can implement more than one interface and that interfaces can extend another interface.</p>
+<p class="indent">We also looked at method return types and saw that you can declare any return type you like (assuming you have access to a class for an object reference return type), unless you’re overriding a method. Barring a covariant return, an overriding method must have the same return type as the overridden method of the superclass. We saw that, although overriding methods must not change the return type, overloaded methods can (as long as they also change the argument list).</p>
+<p class="indent">Finally, you learned that it is legal to return any value or variable that can be implicitly converted to the declared return type. So, for example, a <code>short</code> can <span epub:type="pagebreak" id="page_154"></span>be returned when the return type is declared as an <code>int</code>. And (assuming <code>Horse</code> extends <code>Animal</code>), a <code>Horse</code> reference can be returned when the return type is declared an <code>Animal</code>.</p>
+<p class="indent">We covered constructors in detail, learning that if you don’t provide a constructor for your class, the compiler will insert one. The compiler-generated constructor is called the default constructor, and it is always a no-arg constructor with a no-arg call to <code>super()</code>. The default constructor will never be generated if even a single constructor exists in your class (regardless of the arguments of that constructor); so if you need more than one constructor in your class and you want a no-arg constructor, you’ll have to write it yourself. We also saw that constructors are not inherited and that you can be confused by a method that has the same name as the class (which is legal). The return type is the giveaway that a method is not a constructor because constructors do not have return types.</p>
+<p class="indent">We saw how all the constructors in an object’s inheritance tree will always be invoked when the object is instantiated using <code>new</code>. We also saw that constructors can be overloaded, which means defining constructors with different argument lists. A constructor can invoke another constructor of the same class using the keyword <code>this()</code>, as though the constructor were a method named <code>this()</code>. We saw that every constructor must have either <code>this()</code> or <code>super()</code> as the first statement (although the compiler can insert it for you).</p>
+<p class="indent">After constructors, we discussed the two kinds of initialization blocks and how and when their code runs.</p>
+<p class="indent">We looked at <code>static</code> methods and variables. <code>static</code> members are tied to the class or interface, not an instance, so there is only one copy of any <code>static</code> member. A common mistake is to attempt to reference an instance variable from a <code>static</code> method. Use the respective class or interface name with the dot operator to access <code>static</code> members.</p>
+<p class="indent">And, once again, you learned that the exam includes tricky questions designed largely to test your ability to recognize just how tricky the questions can be.</p>
+<h3 class="h3"><a id="ch02lev1sec12"></a><span epub:type="pagebreak" id="page_155"></span><img alt="images" src="tic1.jpg"/> TWO-MINUTE DRILL</h3>
+<p class="noindent">Here are some of the key points from each certification objective in this chapter.</p>
+<h4 class="h4a">Encapsulation, IS-A, HAS-A* (OCA Objective 6.5)</h4>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Encapsulation helps hide implementation behind an interface (or API).</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Encapsulated code has two features:</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Instance variables are kept protected (usually with the <code>private</code> modifier).</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Getter and setter methods provide access to instance variables.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;IS-A refers to inheritance or implementation.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;IS-A is expressed with the keyword <code>extends</code> or <code>implements</code>.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;IS-A, “inherits from,” and “is a subtype of” are all equivalent expressions.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;HAS-A means an instance of one class “has a” reference to an instance of another class or another instance of the same class. *HAS-A is NOT on the exam, but it’s good to know.</p>
+<h4 class="h4a">Inheritance (OCA Objective 7.1)</h4>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Inheritance allows a type to be a subtype of a supertype and thereby inherit <code>public</code> and <code>protected</code> variables and methods of the supertype.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Inheritance is a key concept that underlies IS-A, polymorphism, overriding, overloading, and casting.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;All classes (except class <code>Object</code>) are subclasses of type <code>Object</code>, and therefore they inherit <code>Object</code>’s methods.</p>
+<h4 class="h4a">Polymorphism (OCA Objective 7.2)</h4>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Polymorphism means “many forms.”</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;A reference variable is always of a single, unchangeable type, but it can refer to a subtype object.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;A single object can be referred to by reference variables of many different types—as long as they are the same type or a supertype of the object.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;The reference variable’s type (not the object’s type) determines which methods can be called!</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Polymorphic method invocations apply only to overridden <em>instance</em> methods.</p>
+<h4 class="h4a"><span epub:type="pagebreak" id="page_156"></span>Overriding and Overloading (OCA Objectives 6.1 and 7.2)</h4>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Methods can be overridden or overloaded; constructors can be overloaded but not overridden.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;With respect to the method it overrides, the overriding method</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Must have the same argument list</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Must have the same return type or a subclass (known as a covariant return)</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Must not have a more restrictive access modifier</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;May have a less restrictive access modifier</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Must not throw new or broader checked exceptions</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;May throw fewer or narrower checked exceptions, or any unchecked exception</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;<code>f</code><code>inal</code> methods cannot be overridden.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Only inherited methods may be overridden, and remember that private methods are not inherited.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;A subclass uses <code>super.overriddenMethodName()</code> to call the superclass version of an overridden method.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;A subclass uses <code>MyInterface.super.overriddenMethodName()</code> to call the super interface version on an overridden method.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Overloading means reusing a method name but with different arguments.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Overloaded methods</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Must have different argument lists</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;May have different return types, if argument lists are also different</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;May have different access modifiers</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;May throw different exceptions</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Methods from a supertype can be overloaded in a subtype.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Polymorphism applies to overriding, not to overloading.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Object type (not the reference variable’s type) determines which overridden method is used at runtime.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Reference type determines which overloaded method will be used at compile time.</p>
+<h4 class="h4a"><span epub:type="pagebreak" id="page_157"></span>Reference Variable Casting (OCA Objective 7.3)</h4>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;There are two types of reference variable casting: downcasting and upcasting.</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;<strong>D</strong><strong>owncasting</strong> If you have a reference variable that refers to a subtype object, you can assign it to a reference variable of the subtype. You must make an explicit cast to do this, and the result is that you can access the subtype’s members with this new reference variable.</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;<strong>U</strong><strong>pcasting</strong> You can assign a reference variable to a supertype reference variable explicitly or implicitly. This is an inherently safe operation because the assignment restricts the access capabilities of the new variable.</p>
+<h4 class="h4a">Implementing an Interface (OCA Objective 7.5)</h4>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;When you implement an interface, you are fulfilling its contract.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;You implement an interface by properly and concretely implementing all the abstract methods defined by the interface.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;A single class can implement many interfaces.</p>
+<h4 class="h4a">Return Types (OCA Objectives 7.2 and 7.5)</h4>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Overloaded methods can change return types; overridden methods cannot, except in the case of covariant returns.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Object reference return types can accept <code>null</code> as a return value.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;An array is a legal return type, both to declare and return as a value.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;For methods with primitive return types, any value that can be implicitly converted to the return type can be returned.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Nothing can be returned from a <code>void</code>, but you can return nothing. You’re allowed to simply say <code>return</code> in any method with a <code>void</code> return type to bust out of a method early. But you can’t return nothing from a method with a non-<code>void</code> return type.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Methods with an object reference return type can return a subtype.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Methods with an interface return type can return any implementer.</p>
+<h4 class="h4a"><span epub:type="pagebreak" id="page_158"></span>Constructors and Instantiation (OCA Objectives 6.3 and 7.4)</h4>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;A constructor is always invoked when a new object is created.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Each superclass in an object’s inheritance tree will have a constructor called.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Every class, even an abstract class, has at least one constructor.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Constructors must have the same name as the class.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Constructors don’t have a return type. If you see code with a return type, it’s a method with the same name as the class; it’s not a constructor.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Typical constructor execution occurs as follows:</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;The constructor calls its superclass constructor, which calls its superclass constructor, and so on all the way up to the <code>Object</code> constructor.</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;The <code>Object</code> constructor executes and then returns to the calling constructor, which runs to completion and then returns to its calling constructor, and so on back down to the completion of the constructor of the actual instance being created.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Constructors can use any access modifier (even <code>private</code>!).</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;The compiler will create a default constructor if you don’t create any constructors in your class.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;The default constructor is a no-arg constructor with a no-arg call to <code>super()</code>.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;The first statement of every constructor must be a call either to <code>this()</code> (an overloaded constructor) or to <code>super()</code>.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;The compiler will add a call to <code>super()</code> unless you have already put in a call to <code>this()</code> or <code>super()</code>.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Instance members are accessible only after the <code>super</code> constructor runs.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;<code>A</code><code>bstract</code> classes have constructors that are called when a concrete subclass is instantiated.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Interfaces do not have constructors.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;If your superclass does not have a no-arg constructor, you must create a constructor and insert a call to <code>super()</code> with arguments matching those of the superclass constructor.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Constructors are never inherited; thus they cannot be overridden.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;A constructor can be directly invoked only by another constructor (using a call to <code>super()</code> or <code>this()</code>).</p>
+<p class="bulletx"><span epub:type="pagebreak" id="page_159"></span><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Regarding issues with calls to <code>this()</code>:</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;They may appear only as the first statement in a constructor.</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;The argument list determines which overloaded constructor is called.</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Constructors can call constructors, and so on, but sooner or later one of them better call <code>super()</code> or the stack will explode.</p>
+<p class="bulletxs"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Calls to <code>this()</code> and <code>super()</code> cannot be in the same constructor. You can have one or the other, but never both.</p>
+<h4 class="h4a">Initialization Blocks (OCA Objective 1.2 and 6.3-ish)</h4>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Use <code>static init</code> blocks—<code>static { /* code here */ }</code>—for code you want to have run once, when the class is first loaded. Multiple blocks run from the top down.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Use normal <code>init</code> blocks—<code>{ /* code here }</code>—for code you want to have run for every new instance, right after all the super constructors have run. Again, multiple blocks run from the top of the class down.</p>
+<h4 class="h4a">Statics (OCA Objective 6.2)</h4>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Use <code>static</code> methods to implement behaviors that are not affected by the state of any instances.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Use <code>static</code> variables to hold data that is class specific as opposed to instance specific—there will be only one copy of a <code>static</code> variable.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;All <code>static</code> members belong to the class, not to any instance.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;A <code>static</code> method can’t access an instance variable directly.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;Use the dot operator to access <code>static</code> members, but remember that using a reference variable with the dot operator is really a syntax trick, and the compiler will substitute the class name for the reference variable; for instance:</p>
+<p class="code2"><code>d.doStuff();</code></p>
+<p class="noindentl">becomes</p>
+<p class="code2"><code>Dog.doStuff();</code></p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;To invoke an interface’s static method use <code>MyInterface.doStuff()</code> syntax.</p>
+<p class="bulletx"><img alt="images" src="boxs1.jpg"/>&#160;&#160;&#160;<code>static</code> methods can’t be overridden, but they can be redefined.</p>
+<h3 class="h3"><a id="ch02lev1sec13"></a><span epub:type="pagebreak" id="page_160"></span>SELF TEST</h3>
+<p class="numlistk"><a href="ch02.xhtml#ch2q1" id="ich2q1"><strong>1.</strong></a>&#160;Given:</p>
+<p class="code2a"><code>public abstract interface Frobnicate { public void twiddle(String s); }</code></p>
+<p class="numn">Which is a correct class? (Choose all that apply.)</p>
+<p class="numsn"><img alt="images" src="p0162-01.jpg"/></p>
+<p class="numlistk"><a href="ch02.xhtml#ch2q2" id="ich2q2"><strong>2.</strong></a>&#160;&#160;&#160;Given:</p>
+<p class="code-1"><img alt="images" src="p0162-02.jpg"/></p>
+<p class="numlist-n">What is the result?</p>
+<p class="num-k">A.&#160;&#160;&#160;<code>BD</code></p>
+<p class="num-k">B.&#160;&#160;&#160;<code>DB</code></p>
+<p class="num-k">C.&#160;&#160;&#160;<code>BDC</code></p>
+<p class="num-k">D.&#160;&#160;&#160;<code>DBC</code></p>
+<p class="num-k">E.&#160;&#160;&#160;Compilation fails</p>
+<p class="numlistk"><span epub:type="pagebreak" id="page_161"></span><a href="ch02.xhtml#ch2q3" id="ich2q3"><strong>3.</strong></a>&#160;&#160;&#160;Given:</p>
+<p class="code-1"><img alt="images" src="p0163-01.jpg"/></p>
+<p class="numlist-n">What is the result?</p>
+<p class="num-k">A.&#160;&#160;&#160;<code>Cli</code><code>dlet</code></p>
+<p class="num-k">B.&#160;&#160;&#160;<code>Cli</code><code>dder</code></p>
+<p class="num-k">C.&#160;&#160;&#160;<code>Cli</code><code>dder<br/>&#160;&#160;&#160;&#160;Clidlet</code></p>
+<p class="num-k">D.&#160;&#160;&#160;<code>Cli</code><code>dlet<br/>&#160;&#160;&#160;&#160;Clidder</code></p>
+<p class="num-k">E.&#160;&#160;&#160;Compilation fails</p>
+<p class="numin"><strong>Special Note:</strong> The next question crudely simulates a style of question known as “drag-and-drop.” Up through the SCJP 6 exam, drag-and-drop questions were included on the exam. As of spring 2014, Oracle DOES NOT include any drag-and-drop questions on its Java exams, but just in case Oracle’s policy changes, we left a few in the book.</p>
+<p class="numlistk"><a href="ch02.xhtml#ch2q4" id="ich2q4"><strong>4.</strong></a>&#160;&#160;&#160;Using the <strong>fragments</strong> below, complete the following <strong>code</strong> so it compiles. Note that you may not have to fill in all of the slots.</p>
+<p class="numlist-n">Code:</p>
+<p class="code-1"><img alt="images" src="p0163-02.jpg"/></p>
+<p class="numlist-n"><span epub:type="pagebreak" id="page_162"></span><strong>Fragments:</strong> Use the following fragments zero or more times:</p>
+<p class="numlist-n"><img alt="images" src="f0164-01.jpg"/></p>
+<p class="numlistk"><a href="ch02.xhtml#ch2q5" id="ich2q5"><strong>5.</strong></a>&#160;&#160;&#160;Given:</p>
+<p class="code-1"><img alt="images" src="p0164-01.jpg"/></p>
+<p class="numlist-n">What is the result?</p>
+<p class="num-k">A.&#160;&#160;&#160;<code>pre</code> <code>b1 b2 r3 r2 hawk</code></p>
+<p class="num-k">B.&#160;&#160;&#160;<code>pre</code> <code>b2 b1 r2 r3 hawk</code></p>
+<p class="num-k">C.&#160;&#160;&#160;<code>pre</code> <code>b2 b1 r2 r3 hawk r1 r4</code></p>
+<p class="num-k">D.&#160;&#160;&#160;<code>r1</code> <code>r4 pre b1 b2 r3 r2 hawk</code></p>
+<p class="num-k">E.&#160;&#160;&#160;<code>r1</code> <code>r4 pre b2 b1 r2 r3 hawk</code></p>
+<p class="num-k">F.&#160;&#160;&#160;<code>pre</code> <code>r1 r4 b1 b2 r3 r2 hawk</code></p>
+<p class="num-k">G.&#160;&#160;&#160;<code>pre</code> <code>r1 r4 b2 b1 r2 r3 hawk</code></p>
+<p class="num-k">H.&#160;&#160;&#160;The order of output cannot be predicted</p>
+<p class="num-k">&#160;&#160;I.&#160;&#160;&#160;Compilation fails</p>
+<p class="num-k">Note: You’ll probably never see this many choices on the real exam!</p>
+<p class="numlistk"><a href="ch02.xhtml#ch2q6" id="ich2q6"><strong>6.</strong></a>&#160;&#160;&#160;Given the following:</p>
+<p class="code-1"><img alt="images" src="p0164-03.jpg"/></p>
+<p class="code-1"><img alt="images" src="p0165-01.jpg"/></p>
+<p class="numlist-n"><span epub:type="pagebreak" id="page_163"></span>Which of the following, inserted at line 9, will compile? (Choose all that apply.)</p>
+<p class="num-k">A.&#160;&#160;&#160;<code>x2.</code><code>do2();</code></p>
+<p class="num-k">B.&#160;&#160;&#160;<code>(Y)</code><code>x2.do2();</code></p>
+<p class="num-k">C.&#160;&#160;&#160;<code>((Y</code><code>)x2).do2();</code></p>
+<p class="num-k">D.&#160;&#160;&#160;None of the above statements will compile</p>
+<p class="numlistk"><a href="ch02.xhtml#ch2q7" id="ich2q7"><strong>7.</strong></a>&#160;&#160;&#160;Given:</p>
+<p class="code-1"><img alt="images" src="p0165-03.jpg"/></p>
+<p class="numlist-n">What is the result? (Choose all that apply.)</p>
+<p class="num-k">A.&#160;&#160;&#160;<code>2</code> will be included in the output</p>
+<p class="num-k">B.&#160;&#160;&#160;<code>3</code> will be included in the output</p>
+<p class="num-k">C.&#160;&#160;&#160;<code>hi</code> will be included in the output</p>
+<p class="num-k">D.&#160;&#160;&#160;Compilation fails</p>
+<p class="num-k">E.&#160;&#160;&#160;An exception is thrown at runtime</p>
+<p class="numlistk"><a href="ch02.xhtml#ch2q8" id="ich2q8"><strong>8.</strong></a>&#160;&#160;&#160;Given:</p>
+<p class="code-1"><img alt="images" src="p0165-04.jpg"/></p>
+<p class="numlist-n"><span epub:type="pagebreak" id="page_164"></span>What is the result? (Choose all that apply.)</p>
+<p class="num-k">A.&#160;&#160;&#160;<code>how</code><code>l howl sniff</code></p>
+<p class="num-k">B.&#160;&#160;&#160;<code>how</code><code>l woof sniff</code></p>
+<p class="num-k">C.&#160;&#160;&#160;<code>how</code><code>l howl</code> followed by an exception</p>
+<p class="num-k">D.&#160;&#160;&#160;<code>how</code><code>l woof</code> followed by an exception</p>
+<p class="num-k">E.&#160;&#160;&#160;Compilation fails with an error at line 14</p>
+<p class="num-k">F.&#160;&#160;&#160;Compilation fails with an error at line 15</p>
+<p class="numlistk"><a href="ch02.xhtml#ch2q9" id="ich2q9"><strong>9.</strong></a>&#160;&#160;&#160;Given:</p>
+<p class="code-1"><img alt="images" src="p0166-01.jpg"/></p>
+<p class="numlist-n">What is the result? (Choose all that apply.)</p>
+<p class="num-k">A.&#160;&#160;&#160;An exception is thrown at runtime</p>
+<p class="num-k">B.&#160;&#160;&#160;The code compiles and runs with no output</p>
+<p class="num-k">C.&#160;&#160;&#160;Compilation fails with an error at line 8</p>
+<p class="num-k">D.&#160;&#160;&#160;Compilation fails with an error at line 9</p>
+<p class="num-k">E.&#160;&#160;&#160;Compilation fails with an error at line 12</p>
+<p class="num-k">F.&#160;&#160;&#160;Compilation fails with an error at line 13</p>
+<p class="numlistk1"><a href="ch02.xhtml#ch2q10" id="ich2q10"><strong>10.</strong></a>&#160;&#160;&#160;Given:</p>
+<p class="code-1"><img alt="images" src="p0166-02.jpg"/></p>
+<p class="numlist-n"><span epub:type="pagebreak" id="page_165"></span>What is the result?</p>
+<p class="num-k">A.&#160;&#160;&#160;<code>fa</code> <code>fa</code></p>
+<p class="num-k">B.&#160;&#160;&#160;<code>fa</code> <code>la</code></p>
+<p class="num-k">C.&#160;&#160;&#160;<code>la</code> <code>la</code></p>
+<p class="num-k">D.&#160;&#160;&#160;Compilation fails</p>
+<p class="num-k">E.&#160;&#160;&#160;An exception is thrown at runtime</p>
+<p class="numlistk1"><a href="ch02.xhtml#ch2q11" id="ich2q11"><strong>11.</strong></a>&#160;&#160;&#160;Given:</p>
+<p class="code-1"><img alt="images" src="p0167-01.jpg"/></p>
+<p class="numlist-n">What is the result?</p>
+<p class="num-k">A.&#160;&#160;&#160;<code>sub</code><code>sub</code></p>
+<p class="num-k">B.&#160;&#160;&#160;<code>sub</code> <code>subsub</code></p>
+<p class="num-k">C.&#160;&#160;&#160;<code>alp</code><code>ha subsub</code></p>
+<p class="num-k">D.&#160;&#160;&#160;<code>alp</code><code>ha sub subsub</code></p>
+<p class="num-k">E.&#160;&#160;&#160;Compilation fails</p>
+<p class="num-k">F.&#160;&#160;&#160;An exception is thrown at runtime</p>
+<p class="numlistk1"><a href="ch02.xhtml#ch2q12" id="ich2q12"><strong>12.</strong></a>&#160;&#160;&#160;Given:</p>
+<p class="code-1"><img alt="images" src="p0167-01.jpg"/></p>
+<p class="numlist-n"><span epub:type="pagebreak" id="page_166"></span>What is the result?</p>
+<p class="num-k">A.&#160;&#160;&#160;<code>h h</code><code>n x</code></p>
+<p class="num-k">B.&#160;&#160;&#160;<code>hn</code> <code>x h</code></p>
+<p class="num-k">C.&#160;&#160;&#160;<code>b h</code> <code>hn x</code></p>
+<p class="num-k">D.&#160;&#160;&#160;<code>b h</code><code>n x h</code></p>
+<p class="num-k">E.&#160;&#160;&#160;<code>bn</code> <code>x h hn x</code></p>
+<p class="num-k">F.&#160;&#160; <code>b b</code><code>n x h hn x</code></p>
+<p class="num-k">G.&#160;&#160; <code>bn</code> <code>x b h hn x</code></p>
+<p class="num-k">H.&#160;&#160;&#160;Compilation fails</p>
+<p class="numlistk1"><a href="ch02.xhtml#ch2q13" id="ich2q13"><strong>13.</strong></a>&#160;&#160;&#160;Given:</p>
+<p class="code-1"><img alt="images" src="p0168-01.jpg"/></p>
+<p class="numlist-n">What is the result?</p>
+<p class="num-k">A.&#160;&#160;&#160;<code>fur</code><code>ry bray</code></p>
+<p class="num-k">B.&#160;&#160;&#160;<code>str</code><code>ipes bray</code></p>
+<p class="num-k">C.&#160;&#160;&#160;<code>fur</code><code>ry generic noise</code></p>
+<p class="num-k">D.&#160;&#160;&#160;<code>str</code><code>ipes generic noise</code></p>
+<p class="num-k">E.&#160;&#160;&#160;Compilation fails</p>
+<p class="num-k">F.&#160;&#160;&#160;An exception is thrown at runtime</p>
+<p class="numlistk1"><a href="ch02.xhtml#ch2q14" id="ich2q14"><strong>14.</strong></a>&#160;&#160;&#160;Given:</p>
+<p class="code-1"><img alt="images" src="p0168-02.jpg"/></p>
+<p class="code-1"><span epub:type="pagebreak" id="page_167"></span><img alt="images" src="p0169-01.jpg"/></p>
+<p class="numlist-n">What is the result? (Choose all that apply.)</p>
+<p class="num-k">A.&#160;&#160;&#160;<code>hop</code><code>ping 212</code></p>
+<p class="num-k">B.&#160;&#160;&#160;Compilation fails due to an error on line 2</p>
+<p class="num-k">C.&#160;&#160;&#160;Compilation fails due to an error on line 5</p>
+<p class="num-k">D.&#160;&#160;&#160;Compilation fails due to an error on line 12</p>
+<p class="num-k">E.&#160;&#160;&#160;Compilation fails due to an error on line 13</p>
+<p class="num-k">F.&#160;&#160;&#160;Compilation fails due to an error on line 14</p>
+<p class="num-k">G.&#160;&#160;&#160;Compilation fails due to an error on line 16</p>
+<p class="numlistk1"><a href="ch02.xhtml#ch2q15" id="ich2q15"><strong>15.</strong></a>&#160;&#160;&#160;Given:</p>
+<p class="code-1"><img alt="images" src="p0169-02.jpg"/></p>
+<p class="numlist-n"><span epub:type="pagebreak" id="page_168"></span>What is the result?</p>
+<p class="num-k">A.&#160;&#160;&#160;<code>1</code></p>
+<p class="num-k">B.&#160;&#160;&#160;<code>2</code></p>
+<p class="num-k">C.&#160;&#160;&#160;<code>3</code></p>
+<p class="num-k">D.&#160;&#160;&#160;The output is unpredictable</p>
+<p class="num-k">E.&#160;&#160;&#160;Compilation fails</p>
+<p class="num-k">F.&#160;&#160;&#160;An exception is thrown at runtime</p>
+<p class="numlistk1"><a href="ch02.xhtml#ch2q16" id="ich2q16"><strong>16.</strong></a>&#160;&#160;&#160;Given:</p>
+<p class="code-1"><img alt="images" src="p0170-01.jpg"/></p>
+<p class="numlist-n">Which line(s) of code, inserted independently at // INSERT CODE HERE, will allow the code to compile? (Choose all that apply.)</p>
+<p class="num-k">A.&#160;&#160;&#160;<code>Sys</code><code>tem.out.println(“class: ” + doStuff());</code></p>
+<p class="num-k">B.&#160;&#160;&#160;<code>Sys</code><code>tem.out.println(“iface: ” + super.doStuff());</code></p>
+<p class="num-k">C.&#160;&#160;&#160;<code>Sys</code><code>tem.out.println(“iface: ” + MyInterface.super.doStuff());</code></p>
+<p class="num-k">D.&#160;&#160;&#160;<code>Sys</code><code>tem.out.println(“iface: ” + MyInterface.doStuff());</code></p>
+<p class="num-k">E.&#160;&#160;&#160;<code>Sys</code><code>tem.out.println(“iface: ” + super.MyInterface.doStuff());</code></p>
+<p class="num-k">F.&#160;&#160;&#160;None of the lines, A–E will allow the code to compile</p>
+<h3 class="h3"><a id="ch02lev1sec14"></a><span epub:type="pagebreak" id="page_169"></span>SELF TEST ANSWERS</h3>
+<p class="hanga"><a href="ch02.xhtml#ich2q1" id="ch2q1"><strong>1.</strong></a>&#160;&#160;&#160;<img alt="images" src="ticb.jpg"/>&#160;<strong>B</strong> and <strong>E</strong> are correct. B is correct because an <code>abstract</code> class need not implement any or all of an interface’s methods. E is correct because the class implements the interface method and additionally overloads the <code>twiddle()</code> method.<br/><img alt="images" src="boxx.jpg"/> <strong>A, C,</strong> and <strong>D</strong> are incorrect. A is incorrect because <code>abstract</code> methods have no body. C is incorrect because classes implement interfaces; they don’t extend them. D is incorrect because overloading a method is not implementing it. (OCA Objectives 7.1 and 7.5)</p>
+<p class="hanga"><a href="ch02.xhtml#ich2q2" id="ch2q2"><strong>2.</strong></a>&#160;&#160;&#160;<img alt="images" src="ticb.jpg"/>&#160;<strong>E</strong> is correct. The implied <code>super()</code> call in <code>Bottom2</code>’s constructor cannot be satisfied because there is no no-arg constructor in <code>Top</code>. A default, no-arg constructor is generated by the compiler only if the class has no constructor defined explicitly.<br/><img alt="images" src="boxx.jpg"/> <strong>A, B, C,</strong> and <strong>D</strong> are incorrect based on the above. (OCA Objective 6.3)</p>
+<p class="hanga"><a href="ch02.xhtml#ich2q3" id="ch2q3"><strong>3.</strong></a>&#160;&#160;&#160;<img alt="images" src="ticb.jpg"/>&#160;<strong>A</strong> is correct. Although a <code>final</code> method cannot be overridden, in this case, the method is private and, therefore, hidden. The effect is that a new, accessible, method flipper is created. Therefore, no polymorphism occurs in this example, the method invoked is simply that of the child class, and no error occurs.<br/><img alt="images" src="boxx.jpg"/> <strong>B, C, D,</strong> and <strong>E</strong> are incorrect based on the preceding. (OCA Objective 7.2)</p>
+<p class="hangai"><strong>Special Note:</strong> This next question crudely simulates a style of question known as “drag-and-drop.” Up through the SCJP 6 exam, drag-and-drop questions were included on the exam. As of spring 2014, Oracle DOES NOT include any drag-and-drop questions on its Java exams, but just in case Oracle’s policy changes, we left a few in the book.</p>
+<p class="hanga"><a href="ch02.xhtml#ich2q4" id="ch2q4"><strong>4.</strong></a>&#160;Here is the answer:</p>
+<p class="code"><img alt="images" src="p0171-01.jpg"/></p>
+<p class="hangan"><span epub:type="pagebreak" id="page_170"></span>As there is no droppable tile for the variable <code>x</code> and the parentheses (in the <code>Kinder</code> constructor) are already in place and empty, there is no way to construct a call to the superclass constructor that takes an argument. Therefore, the only remaining possibility is to create a call to the no-arg superclass constructor. This is done as <code>super();</code>. The line cannot be left blank, as the parentheses are already in place. Further, since the superclass constructor called is the no-arg version, this constructor must be created. It will not be created by the compiler because another constructor is already present. (OCA Objectives 6.3 and 7.4) Note: As you can see, many questions test for OCA Objective 7.1, we’re going to stop mentioning objective 7.1.</p>
+<p class="hanga"><a href="ch02.xhtml#ich2q5" id="ch2q5"><strong>5.</strong></a>&#160;&#160;&#160;<img alt="images" src="ticb.jpg"/>&#160;<strong>D</strong> is correct. Static <code>init</code> blocks are executed at class loading time; instance <code>init</code> blocks run right after the call to <code>super()</code> in a constructor. When multiple <code>init</code> blocks of a single type occur in a class, they run in order, from the top down.<br/><img alt="images" src="boxx.jpg"/> <strong>A, B, C, E, F, G, H,</strong> and <strong>I</strong> are incorrect based on the above. Note: You’ll probably never see this many choices on the real exam! (OCA Objective 6.3)</p>
+<p class="hanga"><a href="ch02.xhtml#ich2q6" id="ch2q6"><strong>6.</strong></a>&#160;&#160;&#160;<img alt="images" src="ticb.jpg"/>&#160;<strong>C</strong> is correct. Before you can invoke <code>Y</code>’s <code>do2</code> method, you have to cast <code>x2</code> to be of type <code>Y</code>.<br/><img alt="images" src="boxx.jpg"/> <strong>A, B,</strong> and <strong>D</strong> are incorrect based on the preceding. B looks like a proper cast, but without the second set of parentheses, the compiler thinks it’s an incomplete statement. (OCA Objective 7.3)</p>
+<p class="hanga"><a href="ch02.xhtml#ich2q7" id="ch2q7"><strong>7.</strong></a>&#160;&#160;&#160;<img alt="images" src="ticb.jpg"/>&#160;<strong>A</strong> is correct. It’s legal to overload <code>main()</code>. Since no instances of <code>Locomotive</code> are created, the constructor does not run and the overloaded version of <code>main()</code> does not run.<br/><img alt="images" src="boxx.jpg"/> <strong>B, C, D,</strong> and <strong>E</strong> are incorrect based on the preceding. (OCA Objectives 1.3 and 6.3)</p>
+<p class="hanga"><a href="ch02.xhtml#ich2q8" id="ch2q8"><strong>8.</strong></a>&#160;&#160;&#160;<img alt="images" src="ticb.jpg"/>&#160;<strong>F</strong> is correct. Class <code>Dog</code> doesn’t have a <code>sniff</code> method.<br/><img alt="images" src="boxx.jpg"/> <strong>A, B, C, D,</strong> and <strong>E</strong> are incorrect based on the above information. (OCA Objectives 7.2 and 7.3)</p>
+<p class="hanga"><a href="ch02.xhtml#ich2q9" id="ch2q9"><strong>9.</strong></a>&#160;&#160;&#160;<img alt="images" src="ticb.jpg"/>&#160;<strong>A</strong> is correct. A <code>ClassCastException</code> will be thrown when the code attempts to downcast a <code>Tree</code> to a <code>Redwood</code>.<br/><img alt="images" src="boxx.jpg"/> <strong>B, C, D, E,</strong> and <strong>F</strong> are incorrect based on the above information. (OCA Objective 7.3)</p>
+<p class="hanga1"><a href="ch02.xhtml#ich2q10" id="ch2q10"><strong>10.</strong></a>&#160;&#160;&#160;<img alt="images" src="ticb.jpg"/>&#160;<strong>B</strong> is correct. The code is correct, but polymorphism doesn’t apply to <code>static</code> methods.<br/><img alt="images" src="boxx.jpg"/> <strong>A, C, D,</strong> and <strong>E</strong> are incorrect based on the above information. (OCA Objectives 6.2 and 7.2)</p>
+<p class="hanga1"><a href="ch02.xhtml#ich2q11" id="ch2q11"><strong>11.</strong></a>&#160;&#160;&#160;<img alt="images" src="ticb.jpg"/>&#160;<strong>C</strong> is correct. Watch out, because <code>SubSubAlpha</code> extends <code>Alpha</code>! Because the code doesn’t attempt to make a <code>SubAlpha</code>, the private constructor in <code>SubAlpha</code> is okay.<br/><img alt="images" src="boxx.jpg"/> <strong>A, B, D, E,</strong> and <strong>F</strong> are incorrect based on the above information. (OCA Objectives 6.3 and 7.2)</p>
+<p class="hanga1"><span epub:type="pagebreak" id="page_171"></span><a href="ch02.xhtml#ich2q12" id="ch2q12"><strong>12.</strong></a>&#160;&#160;&#160;<img alt="images" src="ticb.jpg"/>&#160;<strong>C</strong> is correct. Remember that constructors call their superclass constructors, which execute first, and that constructors can be overloaded.<br/><img alt="images" src="boxx.jpg"/> <strong>A, B, D, E, F, G,</strong> and <strong>H</strong> are incorrect based on the above information. (OCA Objectives 6.3 and 7.4)</p>
+<p class="hanga1"><a href="ch02.xhtml#ich2q13" id="ch2q13"><strong>13.</strong></a>&#160;&#160;&#160;<img alt="images" src="ticb.jpg"/>&#160;<strong>A</strong> is correct. Polymorphism is only for instance methods, not instance variables.<br/><img alt="images" src="boxx.jpg"/> <strong>B, C, D, E,</strong> and <strong>F</strong> are incorrect based on the above information. (OCA Objective 6.3)</p>
+<p class="hanga1"><a href="ch02.xhtml#ich2q14" id="ch2q14"><strong>14.</strong></a>&#160;&#160;&#160;<img alt="images" src="ticb.jpg"/>&#160;<strong>E</strong> and <strong>G</strong> are correct. Neither of these lines of code uses the correct syntax to invoke an interface’s static method.<br/><img alt="images" src="boxx.jpg"/> <strong>A, B, C, D,</strong> and <strong>F</strong> are incorrect based on the above information. (OCP Objectives 6.2 and 7.5)</p>
+<p class="hanga1"><a href="ch02.xhtml#ich2q15" id="ch2q15"><strong>15.</strong></a>&#160;&#160;&#160;<img alt="images" src="ticb.jpg"/>&#160;<strong>E</strong> is correct. This is kind of a trick question; the implementing method must be marked <code>public</code>. If it was, all the other code is legal, and the output would be 3. If you understood all the multiple inheritance rules and just missed the access modifier, give yourself half credit.<br/><img alt="images" src="boxx.jpg"/> <strong>A, B, C, D,</strong> and <strong>F</strong> are incorrect based on the above information. (OCP Objective 7.5)</p>
+<p class="hanga1"><a href="ch02.xhtml#ich2q16" id="ch2q16"><strong>16.</strong></a>&#160;&#160;&#160;<img alt="images" src="ticb.jpg"/>&#160;<strong>A</strong> and <strong>C</strong> are correct. A uses correct syntax to invoke the class’s method, and C uses the correct syntax to invoke the interface’s overloaded <code>default</code> method.<br/><img alt="images" src="boxx.jpg"/> <strong>B, D, E,</strong> and <strong>F</strong> are incorrect. (OCP Objective 7.5)<span epub:type="pagebreak" id="page_172"></span></p>
+</section>
+</body>
+</html>
