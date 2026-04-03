@@ -1,0 +1,14 @@
+Quiero practicar inglés técnico (especialmente Java 8 para la certificación OCA). Cada vez que escriba una frase, haz lo siguiente:
+
+-Si la frase empieza por “Propia”, significa que es mía y debes corregirla.
+--Devuélveme la frase correcta en inglés.
+--Dame una transcripción fonética “fácil” (tipo where → uer).
+--Dame la traducción al español.
+--Explica brevemente los errores importantes.
+
+-Si la frase NO empieza por “Propia”, significa que ya está en inglés y NO necesita corrección.
+--Dame la traducción al español.
+--Dame la transcripción fonética “fácil”.
+--Ten en cuenta que el contexto principal es programación Java 8 y certificación OCA.
+
+-Mantén siempre las explicaciones cortas, claras y prácticas.

@@ -1,0 +1,59 @@
+Claro, Roberto. Aquí tienes una **versión optimizada, compacta y reutilizable** de tu prompt inicial, diseñada específicamente para tu caso de uso: **traducción técnica de manuales Java extraídos en HTML**, manteniendo formato y sin traducir código.  
+La puedes guardar tal cual y usarla siempre que quieras.
+
+---
+
+# **PROMPT OPTIMIZADO PARA TRADUCCIÓN TÉCNICA (HTML + JAVA)**
+
+**Objetivo:** traducir texto técnico de inglés a español **manteniendo íntegramente el HTML**, sin añadir ni eliminar etiquetas, sin introducir líneas vacías, y **sin traducir código Java ni palabras reservadas**.
+
+---
+
+## **PROMPT**
+
+**Quiero que traduzcas texto técnico de inglés a español siguiendo estas reglas estrictas:**
+
+1. **Respeta absolutamente el HTML original.**  
+   - No elimines, modifiques ni reordenes etiquetas.  
+   - No añadas etiquetas nuevas.  
+   - Mantén atributos, clases, ids, entidades HTML y saltos de página tal cual.
+
+2. **No introduzcas líneas vacías entre párrafos.**  
+   - Cada `<p>...</p>` debe ir seguido inmediatamente del siguiente.
+
+3. **No traduzcas nada que sea código Java.**  
+   Esto incluye:  
+   - Palabras reservadas (`public`, `class`, `extends`, `implements`, `static`, etc.)  
+   - Nombres de clases, interfaces, métodos, variables  
+   - Fragmentos dentro de `<code>...</code>`  
+   - Texto dentro de imágenes de código (solo descríbelo si procede, pero no lo traduzcas)
+
+4. **Traduce únicamente el texto explicativo.**  
+   - Mantén el tono técnico y preciso.  
+   - No simplifiques ni reescribas; traduce fielmente.
+
+5. **No alteres el orden del contenido.**  
+   - Mantén imágenes, figuras, tablas y referencias cruzadas exactamente donde están.
+
+6. **Devuélveme el resultado en HTML, sin comentarios adicionales.**
+
+---
+
+## **Ejemplo de uso**
+
+**Entrada:**  
+<h3 class="h3n"><a id="ch02lev1sec10"></a>Statics (OCA Objective 6.2)</h3>
+<p class="noindent"><em>6.2 Apply the static keyword to methods and fields.</em></p>
+<h4 class="h4"><a id="ch02lev2sec13"></a>Static Variables and Methods</h4>
+<p class="noindent">The <code>static</code> modifier has such a profound impact on the behavior of a method or variable that we’re treating it as a concept entirely separate from the other modifiers. To understand the way a <code>static</code> member works, we’ll look first at a reason for using one.</p>
+
+**Salida:**  
+<h3 class="h3n"><a id="ch02lev1sec10"></a>Statics (OCA Objective 6.2)</h3>
+<p class="noindent"><em>6.2 Apply the static keyword to methods and fields.</em></p>
+<h4 class="h4"><a id="ch02lev2sec13"></a>Static Variables and Methods</h4>
+<p class="noindent">El modificador <code>static</code> tiene un impacto tan profundo en el comportamiento de un método o variable que lo tratamos como un concepto completamente separado del resto de modificadores. Para entender cómo funciona un miembro <code>static</code>, primero veremos una razón para usar uno.</p>
+
+
+---
+
+Si quieres, puedo generar también una **versión aún más estricta**, o una **versión para usar en un pipeline automático**.
