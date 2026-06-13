@@ -30,6 +30,11 @@
 
 6. **Devuélveme el resultado en HTML, sin comentarios adicionales.**
 
+7. **No insertes ningún texto ni comentario, eso dificulta el seguiiento.**
+
+8. **El bloque traducido debe finalizar con un salto de línea.**
+
+
 ---
 
 ## **Ejemplo de uso**
