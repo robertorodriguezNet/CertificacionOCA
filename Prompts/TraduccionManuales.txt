@@ -1,10 +1,3 @@
-Claro, Roberto. Aquí tienes una **versión optimizada, compacta y reutilizable** de tu prompt inicial, diseñada específicamente para tu caso de uso: **traducción técnica de manuales Java extraídos en HTML**, manteniendo formato y sin traducir código.  
-La puedes guardar tal cual y usarla siempre que quieras.
-
----
-
-# **PROMPT OPTIMIZADO PARA TRADUCCIÓN TÉCNICA (HTML + JAVA)**
-
 **Objetivo:** traducir texto técnico de inglés a español **manteniendo íntegramente el HTML**, sin añadir ni eliminar etiquetas, sin introducir líneas vacías, y **sin traducir código Java ni palabras reservadas**.
 
 ---
@@ -56,4 +49,3 @@ La puedes guardar tal cual y usarla siempre que quieras.
 
 ---
 
-Si quieres, puedo generar también una **versión aún más estricta**, o una **versión para usar en un pipeline automático**.
