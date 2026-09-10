@@ -1,0 +1,82 @@
+**EDICIÓN**
+- Duplicar línea: **Ctrl + D**  
+- Mover línea arriba/abajo: **Ctrl + Shift + ↑ / Ctrl + Shift + ↓**  
+- Borrar línea: **Ctrl + L**  
+- Seleccionar línea completa: **Ctrl + Shift + L**  
+- Comentar / descomentar línea (//): **Ctrl + Q**  
+- Comentario estilo /* */: **Ctrl + Shift + Q**
+
+**NAVEGACIÓN**
+- Ir a una línea concreta: **Ctrl + G**  
+- Seleccionar palabra: **Ctrl + Shift + W**  
+- Ir al principio del documento: **Ctrl + Inicio**  
+- Ir al final del documento: **Ctrl + Fin**
+
+**BÚSQUEDA**
+- Buscar: **Ctrl + F**  
+- Buscar siguiente: **F3**  
+- Buscar anterior: **Shift + F3**  
+- Reemplazar: **Ctrl + H**  
+- Buscar en todos los archivos abiertos: **Ctrl + Shift + F**
+
+**PESTAÑAS**
+- Nueva pestaña: **Ctrl + N**  
+- Cerrar pestaña: **Ctrl + W**  
+- Cambiar entre pestañas: **Ctrl + Tab**  
+- Guardar: **Ctrl + S**
+
+**FORMATO**
+- Auto sangría: **Ctrl + Alt + Shift + B**  
+- Convertir tabs ↔ espacios: **Ctrl + Alt + Shift + T**  
+- Zoom in/out: **Ctrl + rueda del ratón**
+
+**PLEGADO DE CÓDIGO**
+- Plegar todo: **Alt + 0**  
+- Desplegar todo: **Alt + Shift + 0**
+
+**SELECCIÓN EN COLUMNA (bloque vertical)**
+- Activar selección en columna: **Alt + arrastrar con el ratón**  
+- Selección en columna con teclado: **Alt + Shift + ↑ / ↓ / ← / →**
+
+**MULTICURSOR**
+- Añadir múltiples cursores con el ratón: **Ctrl + clic**  
+- Añadir múltiples cursores en selección vertical: **Alt + arrastrar**  
+- Escribir en varias líneas a la vez:  
+  - Selección en columna → escribir  
+  - O usar **Ctrl + clic** para colocar cursores donde quieras
+
+**COPIAR / PEGAR COLUMNAS**
+- Copiar selección en columna: **Ctrl + C** (funciona igual que copiar normal)  
+- Pegar selección en columna: **Ctrl + V**  
+- Cortar selección en columna: **Ctrl + X**
+
+**INSERTAR TEXTO EN VARIAS LÍNEAS**
+- Selección en columna → escribir  
+- O multicursor con **Ctrl + clic** → escribir
+
+**ELIMINAR BLOQUES VERTICALES**
+- Selección en columna → **Supr** o **Backspace**
+
+**EDITAR AL PRINCIPIO O FINAL DE VARIAS LÍNEAS**
+- Selección en columna al inicio → escribir  
+- Selección en columna al final → escribir  
+- O multicursor con **Ctrl + clic** en cada línea
+
+**RELLENAR COLUMNAS**
+- Selección en columna → escribir texto → se replica en todas las líneas seleccionadas
+
+---
+
+# ⭐ Extra útil para programación
+
+**Plegado de código**
+- Plegar todo: **Alt + 0**  
+- Desplegar todo: **Alt + Shift + 0**
+
+**Mover líneas**
+- Mover línea arriba/abajo: **Ctrl + Shift + ↑ / ↓**
+
+**Duplicar línea**
+- **Ctrl + D**
+
+---

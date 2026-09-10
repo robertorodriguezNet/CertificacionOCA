@@ -1,0 +1,6 @@
+Capítulo: Using simple lambdas
+
+9.5   Escribe una expresión lambda simple que consuma una expresión lambda Predicate.
+
+Solo introducción de lambdas y streams.
+
